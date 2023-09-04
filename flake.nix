@@ -18,11 +18,11 @@
         # nativeBuildInputs is usually what you want -- tools you need to run
         nativeBuildInputs = with pkgs; [
           rofi
-          pkexec
           acpi
-          powertop
+          polkit
+          powerstat
           brightnessctl
-          mpc
+          mpc-cli
           mpd
           firefox
           wireplumber
