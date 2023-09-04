@@ -24,9 +24,11 @@
           brightnessctl
           mpc-cli
           mpd
-          firefox
           wireplumber
           pavucontrol
+          bluez
+          networkmanager
+          xdg-utils
         ];
       };
 
