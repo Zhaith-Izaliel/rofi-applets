@@ -44,7 +44,7 @@ in
       no_option_text = mkTextOption "No option chosen." "No option text.";
     };
 
-    themeConfig = mkOption {
+    theme = mkOption {
       type = rofiHelpers.themeType;
       default = null;
       description = "Rasi configuration used with the applet for Rofi.";
@@ -54,8 +54,8 @@ in
   config = mkIf cfg.enable {
     home.packages = [ package ];
     xdg.configFile = {
-      "rofi/rofi-bluetooth.rasi".text = mkIf cfg.themeConfig != null
-      (rofiHelpers.toRasi cfg.themeConfig);
+      "rofi/rofi-bluetooth.rasi".text = strings.optionalString (cfg.theme != null)
+      (rofiHelpers.toRasi cfg.theme);
       "rofi/rofi-bluetooth.conf".text = rofiHelpers.toConf cfg.settings;
     };
   };

@@ -36,7 +36,7 @@ rec {
         end = "";
       } name value) + "\n";
 
-  toRasi = attrs:
+    toRasi = attrs:
     concatStringsSep "\n" (concatMap (mapAttrsToList mkRasiSection) [
       (filterAttrs (n: _: n == "@theme") attrs)
       (filterAttrs (n: _: n == "@import") attrs)
@@ -61,7 +61,7 @@ rec {
   configType = with types;
     (either (attrsOf (either primitive (listOf primitive))) str);
 
-  themeType = with types; nullOr (oneOf [ str path (attrsOf configType)]);
+  themeType = with types; nullOr (attrsOf configType);
 
   rasiLiteral = types.submodule {
     options = {
