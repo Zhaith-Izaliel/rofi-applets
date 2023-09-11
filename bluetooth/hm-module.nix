@@ -18,7 +18,7 @@ in
   options.programs.rofi.applets.bluetooth = {
     enable = mkEnableOption "Rofi bluetooth applet";
 
-    package = mktOption {
+    package = mkOption {
       type = types.package;
       default = package;
       description = "Package providing the rofi bluetooth applet.";
