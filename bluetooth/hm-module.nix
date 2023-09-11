@@ -50,7 +50,7 @@ in
 
     themeConfig = {
       type = rofiHelpers.configType;
-      default = {};
+      default = "";
       description = "Rasi configuration used with the applet for Rofi.";
     };
   };
