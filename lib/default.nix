@@ -61,7 +61,7 @@ rec {
   configType = with types;
     (either (attrsOf (either primitive (listOf primitive))) str);
 
-  themeType = with types; attrsOf configType;
+  themeType = with types; nullOr (oneOf [ str path (attrsOf configType)]);
 
   rasiLiteral = types.submodule {
     options = {
@@ -78,5 +78,10 @@ rec {
   } // {
     description = "Rasi literal string";
   };
+
+  toConf = config: strings.concatStringsSep "\n" (attrsets.mapAttrsToList
+  (name: value: ''${strings.toUpper name} = "${value}"'')
+  config
+  );
 }
 

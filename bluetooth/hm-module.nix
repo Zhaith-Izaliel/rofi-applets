@@ -9,10 +9,6 @@ let
     inherit default description;
     type = types.nonEmptyStr;
   };
-  toConf = config: strings.concatStringsSep "\n" (attrsets.mapAttrsToList
-  (name: value: ''${strings.toUpper name} = "${value}"'')
-  config
-  );
 in
 {
   options.programs.rofi.applets.bluetooth = {
@@ -49,7 +45,7 @@ in
     };
 
     themeConfig = mkOption {
-      type = with types; nullOr (oneOf [ str path rofiHelpers.themeType ]);
+      type = rofiHelpers.themeType;
       default = null;
       description = "Rasi configuration used with the applet for Rofi.";
     };
@@ -58,8 +54,9 @@ in
   config = mkIf cfg.enable {
     home.packages = [ package ];
     xdg.configFile = {
-      "rofi/rofi-bluetooth.rasi".text = rofiHelpers.toRasi cfg.themeConfig;
-      "rofi/rofi-bluetooth.conf".text = toConf cfg.settings;
+      "rofi/rofi-bluetooth.rasi".text = mkIf cfg.themeConfig != null
+      (rofiHelpers.toRasi cfg.themeConfig);
+      "rofi/rofi-bluetooth.conf".text = rofiHelpers.toConf cfg.settings;
     };
   };
 }
