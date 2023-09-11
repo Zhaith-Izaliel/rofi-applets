@@ -14,49 +14,52 @@
     };
   };
 
-  outputs = { nixpkgs, flake-utils, rofi-network-manager, ... }:
-  flake-utils.lib.eachDefaultSystem (system:
-    with import nixpkgs { inherit system; };
-    let
-      version = "1.0.0";
-    in
-    rec {
-      workspaceShell = pkgs.mkShell {
-        # nativeBuildInputs is usually what you want -- tools you need to run
-        nativeBuildInputs = with pkgs; [
-          rofi
-          acpi
-          polkit
-          powerstat
-          brightnessctl
-          mpc-cli
-          mpd
-          wireplumber
-          pavucontrol
-          bluez
-          networkmanager
-          dunst
-          networkmanagerapplet
-          xdg-utils
-        ];
-      };
+  outputs = { nixpkgs, rofi-network-manager, ... }:
+  let
+    system = "x86_64-linux";
+    version = "1.0.0";
+  in
+  with import nixpkgs { inherit system; };
+  rec {
+    workspaceShell = pkgs.mkShell {
+      nativeBuildInputs = with pkgs; [
+        rofi
+        acpi
+        polkit
+        powerstat
+        brightnessctl
+        mpc-cli
+        mpd
+        wireplumber
+        pavucontrol
+        bluez
+        networkmanager
+        dunst
+        networkmanagerapplet
+        xdg-utils
+      ];
+    };
 
-      devShells = {
-        # nix develop
-        default = workspaceShell;
+    devShells.${system} = {
+      default = workspaceShell;
+    };
+
+    packages.${system} = {
+      rofi-network-manager = pkgs.callPackage ./network-manager {
+        version = rofi-network-manager.shortRev;
+        src = rofi-network-manager;
       };
-      packages = {
-        rofi-network-manager = pkgs.callPackage ./network-manager {
-          version = rofi-network-manager.shortRev;
-          src = rofi-network-manager;
-        };
-        rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
-      };
-      overlays.default = packages;
-    }) // {
-      homeManagerModules = rec {
-        all = [];
+      rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
+    };
+
+    overlays.default = packages;
+
+    homeManagerModules = rec {
+      all = [ rofi-bluetooth ];
+      rofi-bluetooth = import ./bluetooth/hm-module.nix {
+        package = packages.${system}.rofi-bluetooth;
       };
     };
+  };
 }
 
