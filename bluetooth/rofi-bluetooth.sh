@@ -340,7 +340,7 @@ show_menu() {
 }
 
 # Rofi command to pipe into, can add any options here
-rofi_command="rofi -dmenu $* -p -theme $THEME_LOCATION"
+rofi_command="rofi -theme $THEME_LOCATION -dmenu $* -p"
 
 case "$1" in
     --status)
