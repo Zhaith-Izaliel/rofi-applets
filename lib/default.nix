@@ -80,7 +80,7 @@ rec {
   };
 
   toConf = config: strings.concatStringsSep "\n" (attrsets.mapAttrsToList
-  (name: value: ''${strings.toUpper name} = "${value}"'')
+  (name: value: ''${strings.toUpper name}="${value}"'')
   config
   );
 }
