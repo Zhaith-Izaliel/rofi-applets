@@ -42,6 +42,7 @@ in
       paired_yes_text = mkTextOption "Paired: Yes" "Paired yes text.";
       paired_no_text = mkTextOption "Paired: No" "Paired no text.";
       no_option_text = mkTextOption "No option chosen." "No option text.";
+      exit_text = mkTextOption "Exit" "Exit text.";
     };
 
     theme = mkOption {

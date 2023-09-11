@@ -44,6 +44,7 @@ CONNECTED_NO_TEXT="Connected: No"
 PAIRED_YES_TEXT="Paired: Yes"
 PAIRED_NO_TEXT="Paired: No"
 NO_OPTION_TEXT="No option choosen."
+EXIT_TEX="Exit"
 
 
 # Read configuration
@@ -262,7 +263,7 @@ device_menu() {
     fi
     paired=$(device_paired "$mac")
     trusted=$(device_trusted "$mac")
-    options="$connected\n$paired\n$trusted\n$DIVIDER\n$GO_BACK_TEXT\nExit"
+    options="$connected\n$paired\n$trusted\n$DIVIDER\n$GO_BACK_TEXT\n$EXIT_TEXT"
 
     # Open rofi menu, read chosen option
     chosen="$(echo -e "$options" | $rofi_command "$device_name")"
