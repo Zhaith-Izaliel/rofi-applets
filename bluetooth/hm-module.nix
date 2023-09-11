@@ -57,7 +57,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [ package ];
-    xdg.configHome = {
+    xdg.configFile = {
       "rofi/rofi-bluetooth.rasi".text = rofiHelpers.toRasi cfg.themeConfig;
       "rofi/rofi-bluetooth.conf".text = toConf cfg.settings;
     };
