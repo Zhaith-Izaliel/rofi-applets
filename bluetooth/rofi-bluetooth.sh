@@ -23,6 +23,7 @@
 # Home-Manager Module.
 
 # Constants
+THEME_LOCATION="$HOME/.config/rofi/rofi-bluetooth.rasi";
 CONFIG_LOCATION="$HOME/.config/rofi/rofi-bluetooth.conf";
 
 # Default config
@@ -44,7 +45,7 @@ CONNECTED_NO_TEXT="Connected: No"
 PAIRED_YES_TEXT="Paired: Yes"
 PAIRED_NO_TEXT="Paired: No"
 NO_OPTION_TEXT="No option choosen."
-EXIT_TEX="Exit"
+EXIT_TEXT="Exit"
 
 
 # Read configuration
@@ -339,7 +340,7 @@ show_menu() {
 }
 
 # Rofi command to pipe into, can add any options here
-rofi_command="rofi -dmenu $* -p"
+rofi_command="rofi -dmenu $* -p -theme $THEME_LOCATION"
 
 case "$1" in
     --status)
