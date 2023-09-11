@@ -61,6 +61,8 @@ rec {
   configType = with types;
     (either (attrsOf (either primitive (listOf primitive))) str);
 
+  themeType = with types; attrsOf configType;
+
   rasiLiteral = types.submodule {
     options = {
       _type = mkOption {

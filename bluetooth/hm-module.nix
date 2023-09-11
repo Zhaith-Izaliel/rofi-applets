@@ -49,7 +49,7 @@ in
     };
 
     themeConfig = {
-      type = rofiHelpers.configType;
+      type = with types; nullOr (oneOf [ str path rofiHelpers.themeType ]);
       default = "";
       description = "Rasi configuration used with the applet for Rofi.";
     };
