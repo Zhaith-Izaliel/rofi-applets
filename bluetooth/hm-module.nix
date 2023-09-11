@@ -48,9 +48,9 @@ in
       no_option_text = mkTextOption "No option chosen." "No option text.";
     };
 
-    themeConfig = {
+    themeConfig = mkOption {
       type = with types; nullOr (oneOf [ str path rofiHelpers.themeType ]);
-      default = "";
+      default = null;
       description = "Rasi configuration used with the applet for Rofi.";
     };
   };
