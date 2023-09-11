@@ -52,7 +52,7 @@
       rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
     };
 
-    overlays.default = packages;
+    overlays.default = final: prev: packages.${system};
 
     homeManagerModules = rec {
       all = [ rofi-bluetooth ];
