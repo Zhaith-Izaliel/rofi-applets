@@ -80,7 +80,20 @@ rec {
   };
 
   toConf = config: strings.concatStringsSep "\n" (attrsets.mapAttrsToList
-  (name: value: ''${strings.toUpper name}="${value}"'')
+  (name: value:
+  let
+    valueToWrite =
+    if isBool value then
+    toString value
+    else if isInt value then
+    toString value
+    else if isString value then
+    ''"${value}"''
+    else
+    abort "Unhandled value type ${builtins.typeOf value}";
+  in
+  ''${strings.toUpper name}=${valueToWrite}''
+  )
   config
   );
 }

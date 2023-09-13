@@ -55,9 +55,17 @@
     overlays.default = final: prev: packages.${system};
 
     homeManagerModules = rec {
-      all = [ rofi-bluetooth ];
+      all = [
+        rofi-bluetooth
+        rofi-network-manager
+      ];
+
       rofi-bluetooth = import ./bluetooth/hm-module.nix {
         package = packages.${system}.rofi-bluetooth;
+      };
+
+      rofi-network-manager = import ./network-manager/hm-module.nix {
+        package = packages.${system}.rofi-network-manager;
       };
     };
   };
