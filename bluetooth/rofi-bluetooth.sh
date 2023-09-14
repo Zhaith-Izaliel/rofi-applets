@@ -293,7 +293,7 @@ device_menu() {
 show_menu() {
     # Get menu options
     if power_on; then
-        power="Power: on"
+        power="$POWER_ON_TEXT"
 
         # Human-readable names of devices, one per line
         # If scan is off, will only list paired devices
@@ -305,10 +305,10 @@ show_menu() {
         discoverable=$(discoverable_on)
 
         # Options passed to rofi
-        options="$devices\n$DIVIDER\n$power\n$scan\n$pairable\n$discoverable\nExit"
+        options="$devices\n$DIVIDER\n$power\n$scan\n$pairable\n$discoverable\n$EXIT_TEXT"
     else
-        power="Power: off"
-        options="$power\nExit"
+        power="$POWER_OFF_TEXT"
+        options="$power\n$EXIT_TEXT"
     fi
 
     # Open rofi menu, read chosen option

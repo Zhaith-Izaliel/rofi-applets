@@ -12,9 +12,10 @@
       url = "github:P3rf/rofi-network-manager";
       flake = false;
     };
+    hyprland-contrib.url="github:hyprwm/contrib";
   };
 
-  outputs = { nixpkgs, rofi-network-manager, ... }:
+  outputs = { nixpkgs, rofi-network-manager, hyprland-contrib, ... }:
   let
     system = "x86_64-linux";
     version = "1.0.0";
@@ -23,9 +24,7 @@
   rec {
     workspaceShell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
-        rofi
         acpi
-        polkit
         powerstat
         brightnessctl
         mpc-cli
@@ -37,6 +36,7 @@
         dunst
         networkmanagerapplet
         xdg-utils
+        hyprland-contrib.packages.${system}.grimblast
       ];
     };
 
