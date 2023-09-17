@@ -8,7 +8,7 @@ APPS=(
   [" Cfiles"]="kitty -e cfiles"
   [" Neovim"]="kitty -e nvim"
   [" NCMPCPP"]="kitty -e ncmpcpp"
-  )
+)
 PROMPT="Applications"
 MESG="Run Applications as Root"
 CONFIG_PATH="$HOME/.config/rofi/rofi-favorites.conf"
@@ -22,14 +22,14 @@ initialize() {
 
 rofi_cmd() {
   if [ -f "$THEME_PATH" ]; then
-    rofi -dmenu \
-      -p "$PROMPT" \
-      -mesg "$MESG" \
-      -theme "$THEME_PATH"
+     rofi -dmenu \
+       -p "$PROMPT" \
+       -mesg "$MESG" \
+       -theme "$THEME_PATH"
   else
     rofi -dmenu \
-      -p "$PROMPT" \
-      -mesg "$MESG"
+       -p "$PROMPT" \
+       -mesg "$MESG"
   fi
 }
 

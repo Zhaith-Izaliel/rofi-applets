@@ -36,6 +36,7 @@
         dunst
         networkmanagerapplet
         xdg-utils
+        gnuawk
         hyprland-contrib.packages.${system}.grimblast
       ];
     };

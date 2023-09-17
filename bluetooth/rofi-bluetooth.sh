@@ -50,9 +50,9 @@ EXIT_TEXT="Exit"
 
 # Read configuration
 read_config() {
-  if [ -f "$CONFIG_LOCATION" ]; then
-    source "$CONFIG_LOCATION"
-  fi
+    if [ -f "$CONFIG_LOCATION" ]; then
+        source "$CONFIG_LOCATION"
+    fi
 }
 
 # Checks if bluetooth controller is powered on
@@ -245,8 +245,8 @@ print_status() {
         printf "\n"
     else
         echo ""
-    fi
-}
+        fi
+    }
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
 device_menu() {
