@@ -4,7 +4,7 @@ STOP_ICON=""
 PREVIOUS_ICON=""
 NEXT_ICON=""
 REPEAT_ICON=""
-RANDOM_ICON="󰒟"
+RANDOM_ICON=""
 PAUSE_ICON=""
 PLAY_ICON=""
 PARSE_ERROR_ICON=""
@@ -15,7 +15,7 @@ STATUS="`mpc status`"
 PROMPT=""
 MESG=""
 
-# Toggle Actions
+# Colorize toggle actions
 ACTIVE=''
 URGENT=''
 
@@ -39,7 +39,7 @@ initialize() {
   read_config
 
   if [[ -z "$STATUS" ]]; then
-    PROMPT='Offline'
+    PROMPT="Offline"
     MESG="MPD is Offline"
   else
     PROMPT="`mpc -f "%artist%" current`"
@@ -48,22 +48,18 @@ initialize() {
 
   # Repeat
   if [[ ${STATUS} == *"repeat: on"* ]]; then
-    echo "in repeat active"
     ACTIVE="-a 4"
   elif [[ ${STATUS} == *"repeat: off"* ]]; then
-    echo "in repeat inactive"
-    URGENT="-u 4"
+    ACTIVE=""
   else
     OPTIONS["repeat"]="$PARSE_ERROR_ICON"
   fi
 
   # Random
   if [[ ${STATUS} == *"random: on"* ]]; then
-    echo "in random active"
     [ -n "$ACTIVE" ] && ACTIVE+=",5" || ACTIVE="-a 5"
   elif [[ ${STATUS} == *"random: off"* ]]; then
-    echo "in random inactive"
-    [ -n "$URGENT" ] && URGENT+=",5" || URGENT="-u 5"
+    ACTIVE+=""
   else
     OPTIONS["random"]="$PARSE_ERROR_ICON"
   fi
@@ -72,15 +68,15 @@ initialize() {
 rofi_cmd() {
   if [ -f "$THEME_PATH" ]; then
     rofi -dmenu \
+      ${ACTIVE} \
       -p "$PROMPT" \
       -mesg "$MESG" \
-      $ACTIVE $URGENT \
       -theme "$THEME_PATH"
   else
     rofi -dmenu \
+      ${ACTIVE} \
       -p "$PROMPT" \
-      -mesg "$MESG" \
-      $ACTIVE $URGENT
+      -mesg "$MESG"
   fi
 }
 
@@ -89,7 +85,6 @@ pass_options() {
 }
 
 run() {
-  initialize
   case "$1" in
     --toggle)
       mpc -q toggle && dunstify -u low -t 1000 " `mpc current`"
@@ -112,6 +107,8 @@ run() {
   esac
 }
 
+
+initialize
 chosen="$(pass_options)"
 case "${chosen}" in
   ${OPTIONS["repeat"]})
