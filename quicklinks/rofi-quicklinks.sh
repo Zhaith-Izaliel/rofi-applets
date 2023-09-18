@@ -7,6 +7,7 @@ QUICKLINKS=(
   [" Gitlab"]="https://gitlab.com/"
   [" Steam"]="https://store.steampowered.com/"
 )
+ORDER=()
 PROMPT="Applications"
 MESG="Run Applications as Root"
 CONFIG_PATH="$HOME/.config/rofi/rofi-quicklinks.conf"
@@ -20,20 +21,27 @@ initialize() {
 
 rofi_cmd() {
   if [ -f "$THEME_PATH" ]; then
-     rofi -dmenu \
-       -p "$PROMPT" \
-       -mesg "$MESG" \
-       -theme "$THEME_PATH"
+    rofi -dmenu \
+      -p "$PROMPT" \
+      -mesg "$MESG" \
+      -theme "$THEME_PATH"
   else
     rofi -dmenu \
-       -p "$PROMPT" \
-       -mesg "$MESG"
+      -p "$PROMPT" \
+      -mesg "$MESG"
   fi
 }
 
 options() {
   local accumulator=""
-  for key in "${!QUICKLINKS[@]}"; do
+  local keys=()
+  if [ -z "$ORDER" ]; then
+    keys=("${!QUICKLINKS[@]}")
+  else
+    keys=("${ORDER[@]}")
+  fi
+
+  for key in "${keys[@]}"; do
     accumulator="$accumulator$key\n"
   done
   echo -e "$accumulator" | rofi_cmd

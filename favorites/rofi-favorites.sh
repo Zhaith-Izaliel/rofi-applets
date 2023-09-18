@@ -9,6 +9,7 @@ APPS=(
   [" Neovim"]="kitty -e nvim"
   [" NCMPCPP"]="kitty -e ncmpcpp"
 )
+ORDER=()
 PROMPT="Applications"
 MESG="Run Applications as Root"
 CONFIG_PATH="$HOME/.config/rofi/rofi-favorites.conf"
@@ -35,7 +36,14 @@ rofi_cmd() {
 
 options() {
   local accumulator=""
-  for key in "${!APPS[@]}"; do
+  local keys=()
+  if [ -z "$ORDER" ]; then
+    keys=("${!QUICKLINKS[@]}")
+  else
+    keys=("${ORDER[@]}")
+  fi
+
+  for key in "${keys[@]}"; do
     accumulator="$accumulator$key\n"
   done
   echo -e "$accumulator" | rofi_cmd
