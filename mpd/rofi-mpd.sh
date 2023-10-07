@@ -87,16 +87,21 @@ pass_options() {
 run() {
   case "$1" in
     --toggle)
-      mpc -q toggle && dunstify -u low -t 1000 " `mpc current`"
+      mpc -q toggle
+      if [[ "${STATUS}" == *"[playing]"* ]]; then
+        dunstify -i "" -u low -t 1000 "$PAUSE_ICON  `mpc current`"
+      else
+        dunstify -i "" -u low -t 1000 "$PLAY_ICON  `mpc current`"
+      fi
       ;;
     --stop)
       mpc -q stop
       ;;
     --next)
-      mpc -q next && dunstify -u low -t 1000 " `mpc current`"
+      mpc -q next && dunstify -u low -t 1000 " `mpc current`"
       ;;
     --prev)
-      mpc -q prev && dunstify -u low -t 1000 " `mpc current`"
+      mpc -q prev && dunstify -u low -t 1000 " `mpc current`"
       ;;
     --repeat)
       mpc -q repeat
