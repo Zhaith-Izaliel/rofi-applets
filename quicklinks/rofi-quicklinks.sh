@@ -8,8 +8,8 @@ QUICKLINKS=(
   [" Steam"]="https://store.steampowered.com/"
 )
 ORDER=()
-PROMPT="Applications"
-MESG="Run Applications as Root"
+PROMPT="Quicklinks"
+MESG="Open a link"
 CONFIG_PATH="$HOME/.config/rofi/rofi-quicklinks.conf"
 THEME_PATH="$HOME/.config/rofi/rofi-quicklinks.rasi"
 
@@ -42,20 +42,22 @@ options() {
   fi
 
   for key in "${keys[@]}"; do
-    accumulator="$accumulator$key\n"
+    accumulator="$accumulator\n$key"
   done
+  accumulator="${accumulator}Exit"
   echo -e "$accumulator" | rofi_cmd
 }
 
 run_cmd() {
   local option="$1"
-  if [ "$option" = "" ]; then
+  if [ "$option" = "" ] || [ "$option" = "Exit" ]; then
     exit 0
   fi
 
   xdg-open ${QUICKLINKS["${option}"]}
 }
 
+initialize
 chosen="$(options)"
 run_cmd "$chosen"
 

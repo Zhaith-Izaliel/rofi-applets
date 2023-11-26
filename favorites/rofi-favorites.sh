@@ -38,7 +38,7 @@ options() {
   local accumulator=""
   local keys=()
   if [ -z "$ORDER" ]; then
-    keys=("${!QUICKLINKS[@]}")
+    keys=("${!APPS[@]}")
   else
     keys=("${ORDER[@]}")
   fi
@@ -46,18 +46,20 @@ options() {
   for key in "${keys[@]}"; do
     accumulator="$accumulator$key\n"
   done
+  accumulator="${accumulator}Exit"
   echo -e "$accumulator" | rofi_cmd
 }
 
 run_cmd() {
   local option="$1"
-  if [ "$option" = "" ]; then
+  if [ "$option" = "" ] || [ "$option" = "Exit" ]; then
     exit 0
   fi
 
   ${APPS["${option}"]}
 }
 
+initialize
 chosen="$(options)"
 run_cmd "$chosen"
 
