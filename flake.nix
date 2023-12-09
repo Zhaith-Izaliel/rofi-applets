@@ -58,6 +58,7 @@
         rofi-bluetooth
         rofi-quicklinks
         rofi-network-manager
+        rofi-favorites
       ];
 
       rofi-bluetooth = import ./bluetooth/hm-module.nix {
