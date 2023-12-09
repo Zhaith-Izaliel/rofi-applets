@@ -3,7 +3,7 @@
 
 let
   inherit (lib) mkOption mkIf mkEnableOption strings mkLiteral types;
-  cfg = config.programs.rofi.applets.bluetooth;
+  cfg = config.programs.rofi.applets.quicklinks;
   rofiHelpers = import ../lib { inherit lib; };
   mkTextOption = default: description: mkOption {
     inherit default description;
@@ -11,7 +11,7 @@ let
   };
 in
 {
-  options.programs.rofi.applets.bluetooth = {
+  options.programs.rofi.applets.quicklinks = {
     enable = mkEnableOption "Rofi Quicklinks applet";
 
     package = mkOption {
@@ -32,6 +32,12 @@ in
             " Steam" = "https://store.steampowered.com/";
           }
         '';
+        default = {
+          " Reddit" = "https://www.reddit.com/";
+          " Youtube" = "https://www.youtube.com/";
+          " Gitlab" = "https://gitlab.com/";
+          " Steam" = "https://store.steampowered.com/";
+        };
       };
 
       order = {
