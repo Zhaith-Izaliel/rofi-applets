@@ -47,6 +47,7 @@
         src = rofi-network-manager;
       };
       rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
+      rofi-quicklinks = pkgs.callPackage ./quicklinks { inherit version; };
     };
 
     overlays.default = final: prev: packages.${system};
@@ -63,6 +64,10 @@
 
       rofi-network-manager = import ./network-manager/hm-module.nix {
         package = packages.${system}.rofi-network-manager;
+      };
+
+      rofi-quicklinks = import ./quicklinks/hm-module.nix {
+        package = packages.${system}.rofi-quicklinks;
       };
     };
   };

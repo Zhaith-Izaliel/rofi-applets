@@ -79,6 +79,8 @@ rec {
     description = "Rasi literal string";
   };
 
+  associativeArray = types.attrsOf types.nonEmptyStr;
+
   toConf = config: strings.concatStringsSep "\n" (attrsets.mapAttrsToList
   (name: value:
   let
@@ -89,6 +91,15 @@ rec {
     toString value
     else if isString value then
     ''"${value}"''
+    else if isAttrs value then
+    "(" +
+    strings.concatStringsSep " " (builtins.mapAttrs (name: item:
+    ''["${name}"]="${toString item}"'') value)
+    + ")"
+    else if isList value then
+    "(" +
+    strings.concatStringsSep " " value
+    + ")"
     else
     abort "Unhandled value type ${builtins.typeOf value}";
   in
