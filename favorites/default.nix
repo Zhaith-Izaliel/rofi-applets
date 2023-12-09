@@ -1,7 +1,7 @@
 { pkgs, version ? "git" }:
 
 pkgs.callPackage ../builder.nix {
-  pname = "rofi-favorties";
+  pname = "rofi-favorites";
 
   inherit version;
 
