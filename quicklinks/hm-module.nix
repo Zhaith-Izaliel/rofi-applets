@@ -2,7 +2,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkOption mkIf mkEnableOption strings types literalExpression;
+  inherit (lib) mkOption mkIf mkEnableOption strings types;
   cfg = config.programs.rofi.applets.quicklinks;
   rofiHelpers = import ../lib { inherit lib; };
   mkTextOption = default: description: mkOption {
@@ -21,7 +21,7 @@ in
     };
 
     settings = {
-      quicklinks = {
+      quicklinks = mkOption {
         type = rofiHelpers.associativeArray;
         description = "The quicklinks to open in Rofi. The order is not respected";
         default = {
@@ -32,7 +32,7 @@ in
         };
       };
 
-      order = {
+      order = mkOption {
         type = types.listOf types.str;
         default = [];
         description = "The order in which the quicklinks appear. Can be empty.";
