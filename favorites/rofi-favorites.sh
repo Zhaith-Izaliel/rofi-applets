@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
-declare -A APPS
-APPS=(
+declare -A FAVORITES
+FAVORITES=(
   [" Kitty"]="kitty"
   [" Nemo"]="nemo"
   [" Firefox"]="Firefox"
-  [" Cfiles"]="kitty -e cfiles"
   [" Neovim"]="kitty -e nvim"
   [" NCMPCPP"]="kitty -e ncmpcpp"
 )
 ORDER=()
-PROMPT="Applications"
-MESG="Run Applications as Root"
+PROMPT="Favorties"
+MESG="Open an app"
 CONFIG_PATH="$HOME/.config/rofi/rofi-favorites.conf"
 THEME_PATH="$HOME/.config/rofi/rofi-favorites.rasi"
 
@@ -38,7 +37,7 @@ options() {
   local accumulator=""
   local keys=()
   if [ -z "$ORDER" ]; then
-    keys=("${!APPS[@]}")
+    keys=("${!FAVORITES[@]}")
   else
     keys=("${ORDER[@]}")
   fi
@@ -60,7 +59,7 @@ run_cmd() {
     exit 0
   fi
 
-  ${APPS["${option}"]}
+  ${FAVORITES["${option}"]}
 }
 
 initialize
