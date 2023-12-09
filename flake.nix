@@ -48,6 +48,7 @@
       };
       rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
       rofi-quicklinks = pkgs.callPackage ./quicklinks { inherit version; };
+      rofi-favorites = pkgs.callPackage ./favorites { inherit version; };
     };
 
     overlays.default = final: prev: packages.${system};
@@ -70,6 +71,11 @@
       rofi-quicklinks = import ./quicklinks/hm-module.nix {
         package = packages.${system}.rofi-quicklinks;
       };
+
+      rofi-favorites = import ./favorites/hm-module.nix {
+        package = packages.${system}.rofi-favorites;
+      };
+
     };
   };
 }
