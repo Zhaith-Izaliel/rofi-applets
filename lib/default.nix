@@ -93,7 +93,7 @@ rec {
     ''"${value}"''
     else if isAttrs value then
     "(" +
-    strings.concatStringsSep " " (builtins.mapAttrs (name: item:
+    strings.concatStringsSep " " (mapAttrsToList (name: item:
     ''["${name}"]="${toString item}"'') value)
     + ")"
     else if isList value then
