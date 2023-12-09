@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
 declare -A QUICKLINKS
-QUICKLINKS=(
-  [" Reddit"]="https://www.reddit.com/"
-  [" Youtube"]="https://www.youtube.com/"
-  [" Gitlab"]="https://gitlab.com/"
-  [" Steam"]="https://store.steampowered.com/"
-)
+QUICKLINKS=()
 ORDER=()
 PROMPT="Quicklinks"
 MESG="Open a link"
@@ -42,9 +37,13 @@ options() {
   fi
 
   for key in "${keys[@]}"; do
+    if [ "$accumulator" = "" ]; then
+      accumulator="$key"
+      continue
+    fi
     accumulator="$accumulator\n$key"
   done
-  accumulator="${accumulator}Exit"
+  accumulator="${accumulator}\nExit"
   echo -e "$accumulator" | rofi_cmd
 }
 

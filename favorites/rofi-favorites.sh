@@ -44,9 +44,13 @@ options() {
   fi
 
   for key in "${keys[@]}"; do
-    accumulator="$accumulator$key\n"
+    if [ "$accumulator" = "" ]; then
+      accumulator="$key"
+      continue
+    fi
+    accumulator="$accumulator\n$key"
   done
-  accumulator="${accumulator}Exit"
+  accumulator="${accumulator}\nExit"
   echo -e "$accumulator" | rofi_cmd
 }
 
