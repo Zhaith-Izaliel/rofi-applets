@@ -55,6 +55,7 @@
     homeManagerModules = rec {
       all = [
         rofi-bluetooth
+        rofi-quicklinks
         rofi-network-manager
       ];
 
