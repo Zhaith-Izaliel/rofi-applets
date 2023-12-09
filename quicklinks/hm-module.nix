@@ -2,7 +2,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkOption mkIf mkEnableOption strings mkLiteral types;
+  inherit (lib) mkOption mkIf mkEnableOption strings options types;
   cfg = config.programs.rofi.applets.quicklinks;
   rofiHelpers = import ../lib { inherit lib; };
   mkTextOption = default: description: mkOption {
@@ -24,7 +24,7 @@ in
       quicklinks = {
         type = rofiHelpers.associativeArray;
         description = "The quicklinks to open in Rofi. The order is not respected";
-        defaultText = mkLiteral ''
+        defaultText = options.literalExpression ''
           {
             " Reddit" = "https://www.reddit.com/";
             " Youtube" = "https://www.youtube.com/";
