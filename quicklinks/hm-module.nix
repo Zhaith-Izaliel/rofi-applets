@@ -24,14 +24,6 @@ in
       quicklinks = {
         type = rofiHelpers.associativeArray;
         description = "The quicklinks to open in Rofi. The order is not respected";
-        defaultText = literalExpression ''
-          {
-            " Reddit" = "https://www.reddit.com/";
-            " Youtube" = "https://www.youtube.com/";
-            " Gitlab" = "https://gitlab.com/";
-            " Steam" = "https://store.steampowered.com/";
-          }
-        '';
         default = {
           " Reddit" = "https://www.reddit.com/";
           " Youtube" = "https://www.youtube.com/";
