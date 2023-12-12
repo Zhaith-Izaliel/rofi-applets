@@ -4,7 +4,7 @@ declare -A FAVORITES
 FAVORITES=(
   [" Kitty"]="kitty"
   [" Nemo"]="nemo"
-  [" Firefox"]="Firefox"
+  [" Firefox"]="firefox"
   [" Neovim"]="kitty -e nvim"
   [" NCMPCPP"]="kitty -e ncmpcpp"
 )

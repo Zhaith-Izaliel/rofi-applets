@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-STOP_ICON=""
-PREVIOUS_ICON=""
-NEXT_ICON=""
-REPEAT_ICON=""
-RANDOM_ICON=""
-PAUSE_ICON=""
-PLAY_ICON=""
-PARSE_ERROR_ICON=""
+# Config
+STOP_TEXT=""
+PREVIOUS_TEXT=""
+NEXT_TEXT=""
+REPEAT_TEXT=""
+RANDOM_TEXT=""
+PAUSE_TEXT=""
+PLAY_TEXT=""
+PARSE_ERROR_TEXT=""
 
+# Globals
 THEME_PATH="$HOME/.config/rofi/rofi-mpd.rasi"
 CONF_PATH="$HOME/.config/rofi/rofi-mpd.conf"
 STATUS="`mpc status`"
@@ -16,17 +18,17 @@ PROMPT=""
 MESG=""
 
 # Colorize toggle actions
-ACTIVE=''
-URGENT=''
+ACTIVE=""
+URGENT=""
 
 declare -A OPTIONS
 OPTIONS=(
-  ["previous"]="$PREVIOUS_ICON"
-  ["toggle"]="$([[ ${STATUS} == *"[playing]"* ]] && echo "$PAUSE_ICON" || echo "$PLAY_ICON")"
-  ["stop"]="$STOP_ICON"
-  ["next"]="$NEXT_ICON"
-  ["repeat"]="$REPEAT_ICON"
-  ["random"]="$RANDOM_ICON"
+  ["previous"]="$PREVIOUS_TEXT"
+  ["toggle"]="$([[ ${STATUS} == *"[playing]"* ]] && echo "$PAUSE_TEXT" || echo "$PLAY_TEXT")"
+  ["stop"]="$STOP_TEXT"
+  ["next"]="$NEXT_TEXT"
+  ["repeat"]="$REPEAT_TEXT"
+  ["random"]="$RANDOM_TEXT"
 )
 
 read_config() {
@@ -52,7 +54,7 @@ initialize() {
   elif [[ ${STATUS} == *"repeat: off"* ]]; then
     ACTIVE=""
   else
-    OPTIONS["repeat"]="$PARSE_ERROR_ICON"
+    OPTIONS["repeat"]="$PARSE_ERROR_TEXT"
   fi
 
   # Random
@@ -61,7 +63,7 @@ initialize() {
   elif [[ ${STATUS} == *"random: off"* ]]; then
     ACTIVE+=""
   else
-    OPTIONS["random"]="$PARSE_ERROR_ICON"
+    OPTIONS["random"]="$PARSE_ERROR_TEXT"
   fi
 }
 
@@ -89,9 +91,9 @@ run() {
     --toggle)
       mpc -q toggle
       if [[ "${STATUS}" == *"[playing]"* ]]; then
-        dunstify -i "" -u low -t 1000 "$PAUSE_ICON  `mpc current`"
+        dunstify -i "" -u low -t 1000 "$PAUSE_TEXT  `mpc current`"
       else
-        dunstify -i "" -u low -t 1000 "$PLAY_ICON  `mpc current`"
+        dunstify -i "" -u low -t 1000 "$PLAY_TEXT  `mpc current`"
       fi
       ;;
     --stop)

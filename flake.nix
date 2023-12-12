@@ -34,6 +34,7 @@
         networkmanagerapplet
         xdg-utils
         gawk
+        power-profiles-daemon
       ];
     };
 
@@ -49,6 +50,8 @@
       rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
       rofi-quicklinks = pkgs.callPackage ./quicklinks { inherit version; };
       rofi-favorites = pkgs.callPackage ./favorites { inherit version; };
+      rofi-powerprofiles = pkgs.callPackage ./powerprofiles { inherit version; };
+      rofi-mpd = pkgs.callPackage ./mpd { inherit version; };
     };
 
     overlays.default = final: prev: packages.${system};
@@ -59,6 +62,8 @@
         rofi-quicklinks
         rofi-network-manager
         rofi-favorites
+        rofi-powerprofiles
+        rofi-mpd
       ];
 
       rofi-bluetooth = import ./bluetooth/hm-module.nix {
@@ -77,6 +82,13 @@
         package = packages.${system}.rofi-favorites;
       };
 
+      rofi-powerprofiles = import ./powerprofiles/hm-module.nix {
+        package = packages.${system}.rofi-powerprofiles;
+      };
+
+      rofi-mpd = import ./mpd/hm-module.nix {
+        package = packages.${system}.rofi-mpd;
+      };
     };
   };
 }
