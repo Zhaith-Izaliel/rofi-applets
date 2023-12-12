@@ -9,6 +9,7 @@ RANDOM_TEXT=""
 PAUSE_TEXT=""
 PLAY_TEXT=""
 PARSE_ERROR_TEXT=""
+NO_SONG_TEXT="󰟎"
 
 # Globals
 THEME_PATH="$HOME/.config/rofi/rofi-mpd.rasi"
@@ -83,7 +84,11 @@ rofi_cmd() {
 }
 
 pass_options() {
-  echo -e "${OPTIONS["previous"]}\n${OPTIONS["toggle"]}\n${OPTIONS["stop"]}\n${OPTIONS["next"]}\n${OPTIONS["repeat"]}\n${OPTIONS["random"]}" | rofi_cmd
+  if ! [[ "${STATUS}" =~ ^.*(playing|paused).*$ ]]; then
+    echo -e "${NO_SONG_TEXT}" | rofi_cmd
+  else
+    echo -e "${OPTIONS["previous"]}\n${OPTIONS["toggle"]}\n${OPTIONS["stop"]}\n${OPTIONS["next"]}\n${OPTIONS["repeat"]}\n${OPTIONS["random"]}" | rofi_cmd
+  fi
 }
 
 run() {

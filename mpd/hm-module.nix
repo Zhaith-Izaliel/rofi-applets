@@ -37,6 +37,9 @@ in
       play_text = mkTextOption "" "to play the current song";
 
       parse_error_text = mkTextOption "" "when mpc encounters an error";
+
+      no_song_text = mkTextOption "󰟎" "when no song is currently played or
+      paused";
     };
 
     theme = mkOption {
