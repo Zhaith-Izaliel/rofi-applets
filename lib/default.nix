@@ -1,6 +1,13 @@
 { lib }:
 
-with lib;
+/* Most of these Rofi utils come from:
+ * https://github.com/nix-community/home-manager/blob/master/modules/programs/rofi.nix
+*/
+
+let
+  inherit (lib) isBool isInt isString isList isAttrs generators
+  filterAttrs concatStringsSep concatMap types mapAttrsToList mkOption toUpper;
+in
 rec {
   mkValueString = value:
     if isBool value then
@@ -12,7 +19,7 @@ rec {
     else if isString value then
       ''"${value}"''
     else if isList value then
-      "[ ${strings.concatStringsSep "," (map mkValueString value)} ]"
+      "[ ${concatStringsSep "," (map mkValueString value)} ]"
     else
       abort "Unhandled value type ${builtins.typeOf value}";
 
@@ -59,7 +66,13 @@ rec {
 
   # Either a `section { foo: "bar"; }` or a `@import/@theme "some-text"`
   configType = with types;
-    (either (attrsOf (either primitive (listOf primitive))) str);
+    (
+      either (
+        attrsOf (
+          either primitive (listOf primitive)
+        )
+      ) str
+    );
 
   themeType = with types; nullOr (attrsOf configType);
 
@@ -81,7 +94,7 @@ rec {
 
   associativeArray = types.attrsOf types.nonEmptyStr;
 
-  toConf = config: strings.concatStringsSep "\n" (attrsets.mapAttrsToList
+  toConf = config: concatStringsSep "\n" (mapAttrsToList
   (name: value:
   let
     valueToWrite =
@@ -93,17 +106,17 @@ rec {
     ''"${value}"''
     else if isAttrs value then
     "(" +
-    strings.concatStringsSep " " (mapAttrsToList (name: item:
+    concatStringsSep " " (mapAttrsToList (name: item:
     ''["${name}"]="${toString item}"'') value)
     + ")"
     else if isList value then
     "(" +
-    strings.concatStringsSep " " value
+    concatStringsSep " " value
     + ")"
     else
     abort "Unhandled value type ${builtins.typeOf value}";
   in
-  ''${strings.toUpper name}=${valueToWrite}''
+  ''${toUpper name}=${valueToWrite}''
   )
   config
   );
