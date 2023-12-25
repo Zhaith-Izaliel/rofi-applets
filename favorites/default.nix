@@ -1,11 +1,11 @@
-{ pkgs, version ? "git" }:
+{ pkgs, lib, version ? "git" }:
 
 pkgs.callPackage ../builder.nix {
   pname = "rofi-favorites";
 
   inherit version;
 
-  src = ./.;
+  src = lib.sources.sourceFilesBySuffices [".nix"] ( lib.cleanSource ./. );
 
   buildInputs = with pkgs; [
     bash

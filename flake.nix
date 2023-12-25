@@ -50,21 +50,23 @@
       rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
       rofi-quicklinks = pkgs.callPackage ./quicklinks { inherit version; };
       rofi-favorites = pkgs.callPackage ./favorites { inherit version; };
-      rofi-powerprofiles = pkgs.callPackage ./powerprofiles { inherit version; };
+      rofi-power-profiles = pkgs.callPackage ./power-profiles { inherit version; };
       rofi-mpd = pkgs.callPackage ./mpd { inherit version; };
     };
 
     overlays.default = final: prev: packages.${system};
 
     homeManagerModules = rec {
-      all = [
-        rofi-bluetooth
-        rofi-quicklinks
-        rofi-network-manager
-        rofi-favorites
-        rofi-powerprofiles
-        rofi-mpd
-      ];
+      default = {...}: {
+        imports = [
+          rofi-bluetooth
+          rofi-quicklinks
+          rofi-network-manager
+          rofi-favorites
+          rofi-power-profiles
+          rofi-mpd
+        ];
+      };
 
       rofi-bluetooth = import ./bluetooth/hm-module.nix {
         package = packages.${system}.rofi-bluetooth;
@@ -82,8 +84,8 @@
         package = packages.${system}.rofi-favorites;
       };
 
-      rofi-powerprofiles = import ./powerprofiles/hm-module.nix {
-        package = packages.${system}.rofi-powerprofiles;
+      rofi-power-profiles = import ./power-profiles/hm-module.nix {
+        package = packages.${system}.rofi-power-profiles;
       };
 
       rofi-mpd = import ./mpd/hm-module.nix {

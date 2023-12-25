@@ -3,8 +3,8 @@
 PROFILES=()
 PROMPT="Power Profiles Daemon"
 MESG="Current profile: $(powerprofilesctl get)"
-CONFIG_PATH="$HOME/.config/rofi/rofi-powerprofiles.conf"
-THEME_PATH="$HOME/.config/rofi/rofi-powerprofiles.rasi"
+CONFIG_PATH="$HOME/.config/rofi/rofi-power-profiles.conf"
+THEME_PATH="$HOME/.config/rofi/rofi-power-profiles.rasi"
 
 get_performance() {
   local profiles_list="$(powerprofilesctl list)"

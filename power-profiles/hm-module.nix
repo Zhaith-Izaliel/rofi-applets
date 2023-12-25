@@ -11,7 +11,7 @@ let
   };
 in
 {
-  options.programs.rofi.applets.powerprofiles = {
+  options.programs.rofi.applets.power-profiles = {
     enable = mkEnableOption "Rofi Powerprofiles applet";
 
     package = mkOption {
@@ -34,9 +34,9 @@ in
   config = mkIf cfg.enable {
     home.packages = [ package ];
     xdg.configFile = {
-      "rofi/rofi-quicklinks.rasi".text = strings.optionalString (cfg.theme != null)
+      "rofi/rofi-power-profiles.rasi".text = strings.optionalString (cfg.theme != null)
       (rofiHelpers.toRasi cfg.theme);
-      "rofi/rofi-quicklinks.conf".text = rofiHelpers.toConf cfg.settings;
+      "rofi/rofi-power-profiles.conf".text = rofiHelpers.toConf cfg.settings;
     };
   };
 }
