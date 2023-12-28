@@ -3,7 +3,7 @@
 
 let
   inherit (lib) mkOption mkIf mkEnableOption strings types;
-  cfg = config.programs.rofi.applets.powerprofiles;
+  cfg = config.programs.rofi.applets.power-profiles;
   rofiHelpers = import ../lib { inherit lib; };
   mkTextOption = default: description: mkOption {
     inherit default description;
