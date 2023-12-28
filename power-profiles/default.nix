@@ -1,11 +1,11 @@
-{ pkgs, lib, version ? "git" }:
+{ pkgs, cleanAppletSource, version ? "git" }:
 
 pkgs.callPackage ../builder.nix {
   pname = "rofi-power-profiles";
 
   inherit version;
 
-  src = lib.sources.sourceFilesBySuffices [".nix"] ( lib.cleanSource ./. );
+  src = cleanAppletSource ./.;
 
   buildInputs = with pkgs; [
     bash

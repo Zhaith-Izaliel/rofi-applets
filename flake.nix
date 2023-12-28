@@ -20,6 +20,9 @@
     version = "1.0.0";
   in
   with import nixpkgs { inherit system; };
+  let
+    utils = import ./lib { inherit lib; };
+  in
   rec {
     workspaceShell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
@@ -47,11 +50,26 @@
         version = rofi-network-manager.shortRev;
         src = rofi-network-manager;
       };
-      rofi-bluetooth = pkgs.callPackage ./bluetooth { inherit version; };
-      rofi-quicklinks = pkgs.callPackage ./quicklinks { inherit version; };
-      rofi-favorites = pkgs.callPackage ./favorites { inherit version; };
-      rofi-power-profiles = pkgs.callPackage ./power-profiles { inherit version; };
-      rofi-mpd = pkgs.callPackage ./mpd { inherit version; };
+      rofi-bluetooth = pkgs.callPackage ./bluetooth {
+        inherit version;
+        inherit (utils) cleanAppletSource;
+      };
+      rofi-quicklinks = pkgs.callPackage ./quicklinks {
+        inherit version;
+        inherit (utils) cleanAppletSource;
+      };
+      rofi-favorites = pkgs.callPackage ./favorites {
+        inherit version;
+        inherit (utils) cleanAppletSource;
+      };
+      rofi-power-profiles = pkgs.callPackage ./power-profiles {
+        inherit version;
+        inherit (utils) cleanAppletSource;
+      };
+      rofi-mpd = pkgs.callPackage ./mpd {
+        inherit version;
+        inherit (utils) cleanAppletSource;
+      };
     };
 
     overlays.default = final: prev: packages.${system};

@@ -120,5 +120,12 @@ rec {
   )
   config
   );
+
+  cleanAppletSource = src: lib.cleanSourceWith {
+    filter = name: type: (type == "regular" ) && (
+      (builtins.match ".*\.nix" name) == null
+    );
+    src = lib.cleanSource src;
+  };
 }
 
