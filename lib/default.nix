@@ -5,8 +5,8 @@
 */
 
 let
-  inherit (lib) isBool isInt isString isList isAttrs generators map
-  filterAttrs concatStringsSep concatMap types mapAttrsToList mkOption toUpper;
+  inherit (lib) isBool isInt isString isList isAttrs generators filterAttrs
+  concatStringsSep concatMap types mapAttrsToList mkOption toUpper;
 in
 rec {
   mkValueString = value:
@@ -111,7 +111,7 @@ rec {
     + ")"
     else if isList value then
     "(" +
-    concatStringsSep " " (map (item: ''"${item}"'') value)
+    concatStringsSep " " (builtins.map (item: ''"${item}"'') value)
     + ")"
     else
     abort "Unhandled value type ${builtins.typeOf value}";
