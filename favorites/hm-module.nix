@@ -45,7 +45,7 @@ in
 
       prompt = mkTextOption "Favorites" "The Rofi prompt";
 
-      mesg = mkTextOption "Open a link" "The Rofi message.";
+      mesg = mkTextOption "Open your favorite application" "The Rofi message.";
     };
 
     theme = mkOption {
@@ -58,9 +58,9 @@ in
   config = mkIf cfg.enable {
     home.packages = [ package ];
     xdg.configFile = {
-      "rofi/rofi-bluetooth.rasi".text = strings.optionalString (cfg.theme != null)
+      "rofi/rofi-favorites.rasi".text = strings.optionalString (cfg.theme != null)
       (rofiHelpers.toRasi cfg.theme);
-      "rofi/rofi-bluetooth.conf".text = rofiHelpers.toConf cfg.settings;
+      "rofi/rofi-favorites.conf".text = rofiHelpers.toConf cfg.settings;
     };
   };
 }
