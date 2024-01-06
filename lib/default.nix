@@ -111,7 +111,7 @@ rec {
     + ")"
     else if isList value then
     "(" +
-    concatStringsSep " " value
+    concatStringsSep " " ''"${value}"''
     + ")"
     else
     abort "Unhandled value type ${builtins.typeOf value}";
