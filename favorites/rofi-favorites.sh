@@ -9,6 +9,7 @@ FAVORITES=(
   [" NCMPCPP"]="kitty -e ncmpcpp"
 )
 ORDER=()
+EXIT_TEXT="Exit"
 PROMPT="Favorties"
 MESG="Open an app"
 CONFIG_PATH="$HOME/.config/rofi/rofi-favorites.conf"
@@ -49,15 +50,19 @@ options() {
     fi
     accumulator="$accumulator\n$key"
   done
-  accumulator="${accumulator}\nExit"
+  accumulator="${accumulator}\n${EXIT_TEXT}"
   echo -e "$accumulator" | rofi_cmd
 }
 
 run_cmd() {
   local option="$1"
-  if [ "$option" = "" ] || [ "$option" = "Exit" ]; then
+  if [ "$option" = "" ] || [ "$option" = "$EXIT_TEXT" ]; then
     exit 0
+  elif [ ${FAVORITES["${option}"]} = "" ]; then
+    echo "You picked an incorrect option. Did you configure your order correctly?"
+    exit 1
   fi
+
 
   ${FAVORITES["${option}"]}
 }

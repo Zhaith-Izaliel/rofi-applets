@@ -41,6 +41,8 @@ in
       prompt = mkTextOption "Quicklinks" "The Rofi prompt";
 
       mesg = mkTextOption "Open a link" "The Rofi message.";
+
+      exit_text = mkTextOption "Exit" "The exit text";
     };
 
     theme = mkOption {

@@ -3,6 +3,7 @@
 PROFILES=()
 PROMPT="Power Profiles Daemon"
 MESG="Current profile: $(powerprofilesctl get)"
+EXIT_TEXT="Exit"
 CONFIG_PATH="$HOME/.config/rofi/rofi-power-profiles.conf"
 THEME_PATH="$HOME/.config/rofi/rofi-power-profiles.rasi"
 
@@ -48,13 +49,13 @@ options() {
     fi
     accumulator="$accumulator\n$key"
   done
-  accumulator="${accumulator}\nExit"
+  accumulator="${accumulator}\n${EXIT_TEXT}"
   echo -e "$accumulator" | rofi_cmd
 }
 
 run_cmd() {
   local option="$1"
-  if [ "$option" = "" ] || [ "$option" = "Exit" ]; then
+  if [ "$option" = "" ] || [ "$option" = "$EXIT_TEXT" ]; then
     exit 0
   fi
 

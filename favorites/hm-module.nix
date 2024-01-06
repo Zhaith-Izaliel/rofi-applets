@@ -46,6 +46,8 @@ in
       prompt = mkTextOption "Favorites" "The Rofi prompt";
 
       mesg = mkTextOption "Open your favorite application" "The Rofi message.";
+
+      exit_text = mkTextOption "Exit" "The exit text.";
     };
 
     theme = mkOption {
