@@ -4,11 +4,7 @@ PERFORMANCE_TEXT="Performance"
 BALANCED_TEXT="Balanced"
 POWER_SAVER_TEXT="Power saver"
 declare -A PROFILES
-PROFILES=(
-  ["$PERFORMANCE_TEXT"]="performance"
-  ["$BALANCED_TEXT"]="balanced"
-  ["$POWER_SAVER_TEXT"]="power-saver"
-)
+PROFILES=()
 ORDER=()
 PROMPT="Power Profiles Daemon"
 EXIT_TEXT="Exit"
@@ -17,22 +13,30 @@ MESG="Current profile: $(powerprofilesctl get)"
 CONFIG_PATH="$HOME/.config/rofi/rofi-power-profiles.conf"
 THEME_PATH="$HOME/.config/rofi/rofi-power-profiles.rasi"
 
-get_performance() {
+get_profiles() {
+  PROFILES=(
+    ["$POWER_SAVER_TEXT"]="power-saver"
+    ["$BALANCED_TEXT"]="balanced"
+    ["$PERFORMANCE_TEXT"]="performance"
+  )
+
   local profiles_list="$(powerprofilesctl list)"
+
   if [[ "$profiles_list" == *"performance"* ]]; then
     ORDER+=("$PERFORMANCE_TEXT")
   fi
-}
 
-initialize() {
-  if [ -z "$CONFIG_PATH" ]; then
-    source "$CONFIG_PATH"
-  fi
-  get_performance
   ORDER+=(
     "$BALANCED_TEXT"
     "$POWER_SAVER_TEXT"
   )
+}
+
+initialize() {
+  if [ -f "$CONFIG_PATH" ]; then
+    source "$CONFIG_PATH"
+  fi
+  get_profiles
 }
 
 rofi_cmd() {
