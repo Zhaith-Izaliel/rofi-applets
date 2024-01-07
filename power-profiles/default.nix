@@ -13,6 +13,7 @@ pkgs.callPackage ../builder.nix {
 
   paths = with pkgs; [
     power-profiles-daemon
+    rofi-wayland
   ];
 }
 

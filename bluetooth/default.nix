@@ -12,6 +12,7 @@ pkgs.callPackage ../builder.nix {
   ];
 
   paths = with pkgs; [
+    rofi-wayland
     bluez
   ];
 }

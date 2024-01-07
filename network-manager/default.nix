@@ -14,6 +14,7 @@ pkgs.callPackage ../builder.nix {
     qrencode
     networkmanagerapplet
     networkmanager
+    rofi-wayland
   ];
 }
 

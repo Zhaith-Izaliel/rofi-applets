@@ -13,6 +13,7 @@ pkgs.callPackage ../builder.nix {
 
   paths = with pkgs; [
     xdg-utils
+    rofi-wayland
   ];
 }
 
