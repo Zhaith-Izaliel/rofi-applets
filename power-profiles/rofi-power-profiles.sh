@@ -12,6 +12,7 @@ EXIT_TEXT="Exit"
 MESG="Current profile: $(powerprofilesctl get)"
 CONFIG_PATH="$HOME/.config/rofi/rofi-power-profiles.conf"
 THEME_PATH="$HOME/.config/rofi/rofi-power-profiles.rasi"
+ACTIVE="";
 
 get_profiles() {
   PROFILES=(
@@ -32,11 +33,22 @@ get_profiles() {
   )
 }
 
+get_active() {
+  local current=$(powerprofilesctl get)
+
+  for i in in ${!ORDER[@]}; do
+    if [ "${PROFILES["${ORDER["$i"]}"]}" = "$current" ]; then
+      ACTIVE="-a $i"
+    fi
+  done
+}
+
 initialize() {
   if [ -f "$CONFIG_PATH" ]; then
     source "$CONFIG_PATH"
   fi
   get_profiles
+  get_active
 }
 
 rofi_cmd() {
@@ -44,11 +56,13 @@ rofi_cmd() {
     rofi -dmenu \
       -p "$PROMPT" \
       -mesg "$MESG" \
-      -theme "$THEME_PATH"
+      -theme "$THEME_PATH" \
+      $ACTIVE
   else
     rofi -dmenu \
       -p "$PROMPT" \
-      -mesg "$MESG"
+      -mesg "$MESG" \
+      $ACTIVE
   fi
 }
 
