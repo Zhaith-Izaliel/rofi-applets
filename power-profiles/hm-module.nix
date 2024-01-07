@@ -4,11 +4,8 @@
 let
   inherit (lib) mkOption mkIf mkEnableOption strings types;
   cfg = config.programs.rofi.applets.power-profiles;
-  rofiHelpers = import ../lib { inherit lib; };
-  mkTextOption = default: description: mkOption {
-    inherit default description;
-    type = types.nonEmptyStr;
-  };
+  rofiHelpers = import ../utils { inherit lib; };
+  inherit (rofiHelpers) mkTextOption;
 in
 {
   options.programs.rofi.applets.power-profiles = {
@@ -21,7 +18,14 @@ in
     };
 
     settings = {
-      prompt = mkTextOption "Power Profiles Daemon" "The Rofi prompt";
+      prompt = mkTextOption "Power Profiles Daemon" "The Rofi prompt.";
+      exit_text = mkTextOption "Exit" "The exit text.";
+      performance_text = mkTextOption "Performance" "The text used for the
+      performance profile.";
+      balanced_text = mkTextOption "Balanced" "The text used for the balanced
+      profile.";
+      power_saver_text = mkTextOption "Power saver" "The text used for the
+      power-saver.";
     };
 
     theme = mkOption {

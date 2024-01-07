@@ -127,5 +127,10 @@ rec {
     );
     src = lib.cleanSource src;
   };
+
+  mkTextOption = default: description: mkOption {
+    inherit default description;
+    type = types.nonEmptyStr;
+  };
 }
 

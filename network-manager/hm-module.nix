@@ -4,16 +4,17 @@
 with lib;
 let
   cfg = config.programs.rofi.applets.network-manager;
-  rofiHelpers = import ../lib { inherit lib; };
+  rofiHelpers = import ../utils { inherit lib; };
   mkSignalStrength = default: mkOption {
     inherit default;
     type = types.str;
     description = "Custom signal strength indicators.";
   };
+  locationType = types.enum [ 0 1 2 3 4 5 6 7 8 ];
 in
 {
   options.programs.rofi.applets.network-manager = {
-    enable = mkEnableOption "Roi NetworkManager applet";
+    enable = mkEnableOption "Rofi NetworkManager applet";
 
     theme = mkOption {
       type = rofiHelpers.themeType;
@@ -23,7 +24,7 @@ in
 
     settings = {
       location = mkOption {
-        type = types.enum [ 0 1 2 3 4 5 6 7 8 ];
+        type = locationType;
         default = 0;
         description = ''
         Location:
@@ -38,7 +39,7 @@ in
       };
 
       qrcode_location = mkOption {
-        type = types.int;
+        type = locationType;
         default = cfg.settings.location;
         description = ''
         This sets the anchor point for the window displaying the QR code.

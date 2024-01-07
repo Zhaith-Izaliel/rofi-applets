@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
 
-PROFILES=()
+declare -A PROFILES
+PROFILES=(
+  ["$PERFORMANCE_TEXT"]="performance"
+  ["$BALANCED_TEXT"]="balanced"
+  ["$POWER_SAVER_TEXT"]="power-saver"
+)
+ORDER=()
 PROMPT="Power Profiles Daemon"
-MESG="Current profile: $(powerprofilesctl get)"
+PERFORMANCE_TEXT="Performance"
+BALANCED_TEXT="Balanced"
+POWER_SAVER_TEXT="Power saver"
 EXIT_TEXT="Exit"
+
+MESG="Current profile: $(powerprofilesctl get)"
 CONFIG_PATH="$HOME/.config/rofi/rofi-power-profiles.conf"
 THEME_PATH="$HOME/.config/rofi/rofi-power-profiles.rasi"
 
 get_performance() {
   local profiles_list="$(powerprofilesctl list)"
   if [[ "$profiles_list" == *"performance"* ]]; then
-    PROFILES+=("performance")
+    ORDER+=("$PERFORMANCE_TEXT")
   fi
 }
 
@@ -19,9 +29,9 @@ initialize() {
     source "$CONFIG_PATH"
   fi
   get_performance
-  PROFILES+=(
-    "balanced"
-    "power-saver"
+  ORDER+=(
+    "$BALANCED_TEXT"
+    "$POWER_SAVER_TEXT"
   )
 }
 
@@ -40,7 +50,7 @@ rofi_cmd() {
 
 options() {
   local accumulator=""
-  local keys=("${PROFILES[@]}")
+  local keys=("${ORDER[@]}")
 
   for key in "${keys[@]}"; do
     if [ "$accumulator" = "" ]; then
@@ -59,7 +69,7 @@ run_cmd() {
     exit 0
   fi
 
-  powerprofilesctl set "$option"
+  powerprofilesctl set ${PROFILES["${option}"]}
 }
 
 initialize

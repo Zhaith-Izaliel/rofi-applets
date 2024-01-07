@@ -4,12 +4,8 @@
 let
   inherit (lib) mkOption mkIf mkEnableOption strings types;
   cfg = config.programs.rofi.applets.mpd;
-  rofiHelpers = import ../lib { inherit lib; };
-  mkTextOption = default: description: mkOption {
-    inherit default;
-    description = "Defines the text that appears ${description}.";
-    type = types.nonEmptyStr;
-  };
+  rofiHelpers = import ../utils { inherit lib; };
+  inherit (rofiHelpers) mkTextOption;
 in
 {
   options.programs.rofi.applets.mpd = {

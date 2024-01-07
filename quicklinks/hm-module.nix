@@ -4,11 +4,8 @@
 let
   inherit (lib) mkOption mkIf mkEnableOption strings types;
   cfg = config.programs.rofi.applets.quicklinks;
-  rofiHelpers = import ../lib { inherit lib; };
-  mkTextOption = default: description: mkOption {
-    inherit default description;
-    type = types.nonEmptyStr;
-  };
+  rofiHelpers = import ../utils { inherit lib; };
+  inherit (rofiHelpers) mkTextOption;
 in
 {
   options.programs.rofi.applets.quicklinks = {
