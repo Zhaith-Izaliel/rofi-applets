@@ -33,8 +33,8 @@ OPTIONS=(
 )
 
 read_config() {
-  if [ -f "$CONFIG_LOCATION" ]; then
-    source "$CONFIG_LOCATION"
+  if [ -f "$CONF_PATH" ]; then
+    source "$CONF_PATH"
   fi
 }
 
