@@ -23,14 +23,7 @@ ACTIVE=""
 URGENT=""
 
 declare -A OPTIONS
-OPTIONS=(
-  ["previous"]="$PREVIOUS_TEXT"
-  ["toggle"]="$([[ ${STATUS} == *"[playing]"* ]] && echo "$PAUSE_TEXT" || echo "$PLAY_TEXT")"
-  ["stop"]="$STOP_TEXT"
-  ["next"]="$NEXT_TEXT"
-  ["repeat"]="$REPEAT_TEXT"
-  ["random"]="$RANDOM_TEXT"
-)
+OPTIONS=()
 
 read_config() {
   if [ -f "$CONF_PATH" ]; then
@@ -38,18 +31,29 @@ read_config() {
   fi
 }
 
-initialize() {
-  read_config
+init_array() {
+  OPTIONS=(
+    ["previous"]="$PREVIOUS_TEXT"
+    ["toggle"]="$([[ ${STATUS} == *"[playing]"* ]] && echo "$PAUSE_TEXT" || echo "$PLAY_TEXT")"
+    ["stop"]="$STOP_TEXT"
+    ["next"]="$NEXT_TEXT"
+    ["repeat"]="$REPEAT_TEXT"
+    ["random"]="$RANDOM_TEXT"
+  )
+}
 
+init_prompt_and_message() {
   if [[ -z "$STATUS" ]]; then
     PROMPT="Offline"
     MESG="MPD is Offline"
-  else
-    PROMPT="`mpc -f "%artist%" current`"
-    MESG="`mpc -f "%title%" current` :: `mpc status | grep "#" | awk '{print $3}'`"
+    return
   fi
 
-  # Repeat
+  PROMPT="`mpc -f "%artist%" current`"
+  MESG="`mpc -f "%title%" current` :: `mpc status | grep "#" | awk '{print $3}'`"
+}
+
+init_repeat() {
   if [[ ${STATUS} == *"repeat: on"* ]]; then
     ACTIVE="-a 4"
   elif [[ ${STATUS} == *"repeat: off"* ]]; then
@@ -57,7 +61,9 @@ initialize() {
   else
     OPTIONS["repeat"]="$PARSE_ERROR_TEXT"
   fi
+}
 
+init_random() {
   # Random
   if [[ ${STATUS} == *"random: on"* ]]; then
     [ -n "$ACTIVE" ] && ACTIVE+=",5" || ACTIVE="-a 5"
@@ -66,6 +72,14 @@ initialize() {
   else
     OPTIONS["random"]="$PARSE_ERROR_TEXT"
   fi
+}
+
+initialize() {
+  read_config
+  init_array
+  init_prompt_and_message
+  init_repeat
+  init_random
 }
 
 rofi_cmd() {
@@ -120,26 +134,30 @@ run() {
 }
 
 
-initialize
-chosen="$(pass_options)"
-case "${chosen}" in
-  ${OPTIONS["repeat"]})
-    run --repeat
-    ;;
-  ${OPTIONS["random"]})
-    run --random
-    ;;
-  ${OPTIONS["toggle"]})
-    run --toggle
-    ;;
-  ${OPTIONS["next"]})
-    run --next
-    ;;
-  ${OPTIONS["previous"]})
-    run --prev
-    ;;
-  ${OPTIONS["stop"]})
-    run --stop
-    ;;
-esac
+main() {
+  initialize
+  chosen="$(pass_options)"
+  case "${chosen}" in
+    ${OPTIONS["repeat"]})
+      run --repeat
+      ;;
+    ${OPTIONS["random"]})
+      run --random
+      ;;
+    ${OPTIONS["toggle"]})
+      run --toggle
+      ;;
+    ${OPTIONS["next"]})
+      run --next
+      ;;
+    ${OPTIONS["previous"]})
+      run --prev
+      ;;
+    ${OPTIONS["stop"]})
+      run --stop
+      ;;
+  esac
+}
+
+main
 
