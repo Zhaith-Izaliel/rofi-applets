@@ -48,9 +48,9 @@ in
   config = mkIf cfg.enable {
     home.packages = [ package ];
     xdg.configFile = {
-      "rofi/rofi-quicklinks.rasi".text = strings.optionalString (cfg.theme != null)
+      "rofi/rofi-mpd.rasi".text = strings.optionalString (cfg.theme != null)
       (rofiHelpers.toRasi cfg.theme);
-      "rofi/rofi-quicklinks.conf".text = rofiHelpers.toConf cfg.settings;
+      "rofi/rofi-mpd.conf".text = rofiHelpers.toConf cfg.settings;
     };
   };
 }
