@@ -21,7 +21,7 @@
   in
   with import nixpkgs { inherit system; };
   let
-    utils = import ./lib { inherit lib; };
+    utils = import ./utils { inherit lib; };
   in
   rec {
     workspaceShell = pkgs.mkShell {

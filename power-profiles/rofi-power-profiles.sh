@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+PERFORMANCE_TEXT="Performance"
+BALANCED_TEXT="Balanced"
+POWER_SAVER_TEXT="Power saver"
 declare -A PROFILES
 PROFILES=(
   ["$PERFORMANCE_TEXT"]="performance"
@@ -8,9 +11,6 @@ PROFILES=(
 )
 ORDER=()
 PROMPT="Power Profiles Daemon"
-PERFORMANCE_TEXT="Performance"
-BALANCED_TEXT="Balanced"
-POWER_SAVER_TEXT="Power saver"
 EXIT_TEXT="Exit"
 
 MESG="Current profile: $(powerprofilesctl get)"
