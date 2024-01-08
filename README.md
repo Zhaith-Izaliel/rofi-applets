@@ -222,14 +222,14 @@ Project Link: [https://gitlab.com/Zhaith-Izaliel/rofi-applets](https://gitlab.co
 [forks-shield]: https://img.shields.io/gitlab/forks/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
 [forks-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/forks
 
-[stars-shield]: https://img.shields.io/github/stars/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[stars-shield]: https://img.shields.io/gitlab/stars/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
 [stars-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/starrers
 
-[issues-shield]: https://img.shields.io/github/issues/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[issues-shield]: https://img.shields.io/gitlab/issues/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
 [issues-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/issues
 
-[license-shield]: https://img.shields.io/github/license/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
-[license-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/blob/master/LICENSE.md?ref_type=heads
+[license-shield]: https://img.shields.io/gitlab/license/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[license-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/blob/master/LICENSE?ref_type=heads
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
