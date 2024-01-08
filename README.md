@@ -236,6 +236,6 @@ Project Link: [https://gitlab.com/Zhaith-Izaliel/rofi-applets](https://gitlab.co
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 
 [product-screenshot]: images/screenshot.png
-[Nix]: https://img.shields.io/badge/nix-000000?style=for-the-badge&logo=nixos&logoColor=white
+[Nix]: https://img.shields.io/badge/nix-bedbf1?style=for-the-badge&logo=nixos
 [Nix-url]: https://nixos.org/
 
