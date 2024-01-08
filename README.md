@@ -22,7 +22,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![GNU GPL v3.0][license-shield]][license-url]
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -35,10 +35,11 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Rofi Applets, the Nix way.</h3>
 
   <p align="center">
-    project_description
+    A collection of Rofi applets, with their own derivations and modules to be
+    used with Home Manager and Nix.
     <br />
     <a href="https://gitlab.com/Zhaith-Izaliel/rofi-applets"><strong>Explore the docs »</strong></a>
     <br />
@@ -94,17 +95,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![Nix][Nix]][Nix-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -115,11 +108,15 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+#### Nix/NixOS + Home Manager (With Flakes)
+
+To install and use these applets you will need:
+
+* Nix installed on your system.
+* A Home Manager ready configuration built **with flakes**.
+
+#### Without Nix
+
 
 ### Installation
 
@@ -160,7 +157,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Feature 3
     - [ ] Nested Feature
 
-See the [open issues](https://github.com/Zhaith-Izaliel/rofi-applets/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -170,6 +167,8 @@ See the [open issues](https://github.com/Zhaith-Izaliel/rofi-applets/issues) for
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+**Contributions are only available on Gitlab.**
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
@@ -187,7 +186,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the GNU General Public License v3.0. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -196,20 +195,20 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/Zhaith-Izaliel/rofi-applets](https://github.com/Zhaith-Izaliel/rofi-applets)
+Project Link: [https://gitlab.com/Zhaith-Izaliel/rofi-applets](https://gitlab.com/Zhaith-Izaliel/rofi-applets)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template) for their amazing README template
+* [adi1090x/rofi](https://github.com/adi1090x/rofi/tree/master) for their collection of Rofi applets that I took inspiration on. Without it, this project wouldn't be the same.
+* [Rofi-Bluetooth](https://github.com/nickclyde/rofi-bluetooth) for the fork of rofi-bluetooth I readapted for the purpose of making a module for home-manager
+* [Home Manager](https://github.com/nix-community/home-manager), without it, it wouldn't work.
+* [Rofi-NetWork-Manager](https://github.com/P3rf/rofi-network-manager), for the network manager applet used directly in the flake.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -236,20 +235,6 @@ Project Link: [https://github.com/Zhaith-Izaliel/rofi-applets](https://github.co
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com
+[Nix]: https://img.shields.io/badge/nix-000000?style=for-the-badge&logo=nixos&logoColor=white
+[Nix-url]: https://nixos.org/
 
