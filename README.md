@@ -216,19 +216,20 @@ Project Link: [https://gitlab.com/Zhaith-Izaliel/rofi-applets](https://gitlab.co
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/gitlab/contributors/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[contributors-shield]: https://img.shields.io/gitlab/contributors/Zhaith-Izaliel%2rofi-applets.svg?style=for-the-badge&logo=gitlab
 [contributors-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/graphs/master?ref_type=heads
 
-[forks-shield]: https://img.shields.io/gitlab/forks/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[forks-shield]: https://img.shields.io/gitlab/forks/Zhaith-Izaliel%2rofi-applets.svg?style=for-the-badge&logo=gitlab
 [forks-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/forks
 
-[stars-shield]: https://img.shields.io/gitlab/stars/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[stars-shield]: https://img.shields.io/gitlab/stars/Zhaith-Izaliel%2rofi-applets.svg?style=for-the-badge&logo=gitlab
 [stars-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/starrers
 
-[issues-shield]: https://img.shields.io/gitlab/issues/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[issues-shield]: https://img.shields.io/gitlab/issues/open/Zhaith-Izaliel%2Frofi-applets?style=for-the-badge
+
 [issues-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/issues
 
-[license-shield]: https://img.shields.io/gitlab/license/Zhaith-Izaliel/rofi-applets.svg?style=for-the-badge&logo=gitlab
+[license-shield]: https://img.shields.io/gitlab/license/Zhaith-Izaliel%2rofi-applets.svg?style=for-the-badge&logo=gitlab
 [license-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/blob/master/LICENSE?ref_type=heads
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
