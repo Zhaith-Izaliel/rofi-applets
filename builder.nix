@@ -1,7 +1,21 @@
-{stdenv, lib, pname, version, src, makeWrapper, buildInputs ? [], paths ? [], desktopItemPhase ? "" }:
+{
+  stdenv,
+  lib,
+  pname,
+  version,
+  src,
+  makeWrapper,
+  rofi,
+  rofi-wayland,
+  buildInputs ? [],
+  paths ? [],
+  desktopItemPhase ? "",
+  useWayland ? true
+}:
 
 let
-  wrapperPath = with lib; makeBinPath (paths);
+  newPaths = paths ++ (if useWayland then [rofi-wayland] else [rofi]);
+  wrapperPath = lib.makeBinPath (newPaths);
   desktopItemPhaseName = if (desktopItemPhase != "") then "desktopItemPhase" else "";
 in
 stdenv.mkDerivation rec {

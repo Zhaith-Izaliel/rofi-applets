@@ -1,9 +1,14 @@
-{ pkgs, cleanAppletSource, version ? "git" }:
+{
+  pkgs,
+  cleanAppletSource,
+  useWayland ? true,
+  version ? "git"
+}:
 
 pkgs.callPackage ../builder.nix {
   pname = "rofi-quicklinks";
 
-  inherit version;
+  inherit version useWayland;
 
   src = cleanAppletSource ./.;
 
@@ -13,7 +18,6 @@ pkgs.callPackage ../builder.nix {
 
   paths = with pkgs; [
     xdg-utils
-    rofi-wayland
   ];
 }
 
