@@ -57,45 +57,51 @@
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+<!-- vim-markdown-toc GFM -->
 
+* [About The Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+    * [Nix/NixOS + Home Manager (With Flakes)](#nixnixos--home-manager-with-flakes)
+    * [Without Nix](#without-nix)
+  * [Installation](#installation)
+    * [Nix/NixOS + Home Manager (With Flakes)](#nixnixos--home-manager-with-flakes-1)
+      * [Building applets with Rofi for X11, not Wayland](#building-applets-with-rofi-for-x11-not-wayland)
+    * [Without Nix](#without-nix-1)
+* [Usage](#usage)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Acknowledgments](#acknowledgments)
+
+<!-- vim-markdown-toc -->
+</details>
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Rofi Applets Screenshot][product-screenshot]](https://gitlab.com/Zhaith-Izaliel/rofi-applets)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Rofi Applets is a collection of dmenu bash utilities built for Rofi, similar to
+[Aditya Shakya's Rofi applets][adi1090x-rofi] but built specifically to work
+with Nix and Home Manager while not assuming theming by default.
+
+These applets have high customizations capabilities you can easily set up using
+their corresponding Home Manager modules, or just by creating their theme and
+updating their `.conf` files. All applets can be tailored to your specific needs.
+
+They, however, do not assume theming by default, **as such, you need to make
+your own Rofi theme**. Some example themes are provided in the `example`
+directory.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
 * [![Nix][Nix]][Nix-url]
+* [![Bash][Bash]][Bash-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -103,64 +109,144 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+There are two ways of
 
 ### Prerequisites
 
 #### Nix/NixOS + Home Manager (With Flakes)
 
-To install and use these applets you will need:
+To install and use these applets with Nix you will need:
 
 * Nix installed on your system.
 * A Home Manager ready configuration built **with flakes**.
 
 #### Without Nix
 
+Without Nix, installing these applets require their individual dependencies. For
+every packages you will need at least:
+
+* Rofi 1.7.5+
+* Bash 5.2.21+
+
+Dependencies for every applet
+
+* Bluetooth applet:
+  * Bluez with access to `bluetoothctl` command
+  * GNU Grep
+* Favorites applet:
+  * All the applications you wish to run with `rofi-favorites` should be in your
+  `PATH`
+* MPD applet:
+  * An MPD server up and running to use
+  * MPC to control MPD in command line
+  * Dunst for the `dunstify` command to send notifications
+* Network-Manager applet:
+  * This applet is external to this repository, if you wish to install it, you
+  can find instructions [here][rofi-network-manager].
+* Power-Profiles applet:
+  * Power Profiles Daemon, with access to the `powerprofilesctl` command.
+* Quicklinks applet:
+  * XDG Utils, with access to the `xdg-open` command.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/Zhaith-Izaliel/rofi-applets.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+#### Nix/NixOS + Home Manager (With Flakes)
+
+We assume you have a fair bit of knowledge on how flakes with nix works.
+
+1. Add this repository to your flake inputs:
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rofi-applets = {
+      url = "gitlab:Zhaith-Izaliel/rofi-applets";
+      inputs.nixpkgs.follows = "nixpkgs" # Optional
+    };
+  };
+}
+```
+2. Add the packages overlay to your overlays in your outputs:
+```nix
+nixpkgs.overlays = [ inputs.rofi-applets.overlays.default ];
+```
+
+3. Add the modules to your Home Manager modules list:
+
+```nix
+inputs.home-manager.lib.homeManagerConfiguration {
+  modules = [
+    inputs.rofi-applets.homeManagerModules.${name} # Where name is the name of the applet module you wish to add
+    # Alternatively you can import the `default` module which contains every applets
+    inputs.rofi-applets.homeManagerModules.default
+  ];
+}
+```
+4. Every module provided by the flake are under `programs.rofi.applets.<name>`.
+   You can start configuring from there!
+
+##### Building applets with Rofi for X11, not Wayland
+
+By default, the applets are built with the `rofi-wayland` package available in
+Nixpkgs. However, it is possible to build with them `rofi` directly, if you
+don't need to support Wayland.
+
+To do so, override the packages definition:
+```nix
+{ pkgs, ... }:
+
+{
+  programs.rofi.applets.favorites.package = pkgs.rofi-favorites.override { useWayland = false; };
+}
+```
+Replace `rofi-favorites` and `favorites` by the applet you want to override. You
+can also override this package definition in `home.packages` and
+`environment.systemPackages` in the same way.
+
+#### Without Nix
+
+1. Install the applets dependencies with your package manager.
+
+2. Copy the applet you wish to install to `/usr/local/bin` and make it
+   executable:
+```bash
+cp <applet-name>/<applet-name>.sh /usr/local/bin/<name>
+sudo chmod +x /usr/local/bin/<name>
+```
+3. Every applet configuration files are put into:
+   `$HOME/.config/rofi/<name>.conf` and their theme are in
+   `$HOME/.config/rofi/<name>.rasi`. For example `rofi-favorites` configuration
+   file and theme are in `$HOME/.config/rofi/rofi-favorites.conf` and
+   `$HOME/.config/rofi/rofi-bluetooth.rasi` respectively.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+Each applet has its own documentation located in their corresponding directory.
+You can find usage information in there!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Fix Rofi MPD putting notifications in history
+- [ ] Create our own Network-Manager applet following the same pattern of
+configuration and theming options.
 
 See the [open issues](https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- CONTRIBUTING -->
@@ -168,19 +254,18 @@ See the [open issues](https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/issues) f
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-**Contributions are only available on Gitlab.**
+**Contributions are only available on GitLab.**
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project
+1. Fork the Project **on GitLab**
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- LICENSE -->
@@ -191,23 +276,14 @@ Distributed under the GNU General Public License v3.0. See `LICENSE` for more in
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- CONTACT -->
-## Contact
-
-Project Link: [https://gitlab.com/Zhaith-Izaliel/rofi-applets](https://gitlab.com/Zhaith-Izaliel/rofi-applets)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template) for their amazing README template
-* [adi1090x/rofi](https://github.com/adi1090x/rofi/tree/master) for their collection of Rofi applets that I took inspiration on. Without it, this project wouldn't be the same.
-* [Rofi-Bluetooth](https://github.com/nickclyde/rofi-bluetooth) for the fork of rofi-bluetooth I readapted for the purpose of making a module for home-manager
+* [adi1090x/rofi][adi1090x-rofi] for their collection of Rofi applets that I took inspiration on. Without it, this project wouldn't be the same.
+* [Rofi-Bluetooth](https://github.com/nickclyde/rofi-bluetooth) for the fork of rofi-bluetooth I re-adapted for the purpose of making a module for home-manager
 * [Home Manager](https://github.com/nix-community/home-manager), without it, it wouldn't work.
-* [Rofi-NetWork-Manager](https://github.com/P3rf/rofi-network-manager), for the network manager applet used directly in the flake.
+* [Rofi-NetWork-Manager][rofi-network-manager], for the network manager applet used directly in the flake.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -238,4 +314,8 @@ Project Link: [https://gitlab.com/Zhaith-Izaliel/rofi-applets](https://gitlab.co
 [product-screenshot]: images/screenshot.png
 [Nix]: https://img.shields.io/badge/nix-bedbf1?style=for-the-badge&logo=nixos
 [Nix-url]: https://nixos.org/
+[Bash]: https://img.shields.io/badge/Bash-000000?style=for-the-badge&logo=gnubash&logoColor=FFFFFF
+[Bash-url]: https://www.gnu.org/software/bash/
+[adi1090x-rofi]: https://github.com/adi1090x/rofi/tree/master
+[rofi-network-manager]: https://github.com/P3rf/rofi-network-manager
 

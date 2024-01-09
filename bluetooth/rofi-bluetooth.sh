@@ -283,6 +283,9 @@ device_menu() {
         "$trusted")
             toggle_trust "$mac"
             ;;
+        "$EXIT_TEXT")
+            exit 0
+            ;;
         "$GO_BACK_TEXT")
             show_menu
             ;;
@@ -330,6 +333,9 @@ show_menu() {
             ;;
         "$pairable")
             toggle_pairable
+            ;;
+        "$EXIT_TEXT")
+            exit 0
             ;;
         *)
             device=$(bluetoothctl devices | grep "$chosen")

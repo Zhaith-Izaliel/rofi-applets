@@ -18,6 +18,7 @@ pkgs.callPackage ../builder.nix {
 
   paths = with pkgs; [
     bluez
+    gnugrep
   ];
 }
 

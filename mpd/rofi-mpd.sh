@@ -133,7 +133,6 @@ run() {
   esac
 }
 
-
 main() {
   initialize
   chosen="$(pass_options)"
