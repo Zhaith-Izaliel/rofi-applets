@@ -238,7 +238,6 @@ You can find usage information in there!
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Fix Rofi MPD putting notifications in history
 - [ ] Create our own Network-Manager applet following the same pattern of
 configuration and theming options.
 
