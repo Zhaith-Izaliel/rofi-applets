@@ -1,0 +1,170 @@
+* {
+font: "FiraCode Nerd Font Mono 14";
+}
+
+configuration {
+show-icons: false;
+}
+
+dummy {
+background-color: transparent;
+enabled: true;
+}
+
+element {
+background-color: #24273a;
+border: 1px solid 1px solid 4px solid;
+border-color: #cad3f5;
+border-radius: 20px;
+cursor: pointer;
+enabled: true;
+padding: 1.5em 0.5em;
+text-color: #cad3f5;
+}
+
+element normal.active, element alternate.active {
+background-color: inherit;
+border-color: inherit;
+text-color: #b7bdf8;
+}
+
+element normal.normal, element alternate.normal {
+background-color: #24273a;
+border-color: #cad3f5;
+text-color: #cad3f5;
+}
+
+element normal.urgent, element alternate.urgent {
+background-color: inherit;
+border-color: inherit;
+text-color: #ee99a0;
+}
+
+element selected.active {
+background-color: #b7bdf8;
+border-color: #5B66D3;
+text-color: #24273a;
+}
+
+element selected.normal {
+background-color: #8aadf4;
+border-color: #3F6ECC;
+text-color: #24273a;
+}
+
+element selected.urgent {
+background-color: #ee99a0;
+border-color: #C44E57;
+text-color: #24273a;
+}
+
+element-text {
+background-color: transparent;
+cursor: inherit;
+font: "FiraCode Nerd Font Mono 34";
+horizontal-align: 0.5;
+text-color: inherit;
+vertical-align: 0.5;
+}
+
+error-message {
+background-color: #181926;
+border-radius: 15px;
+padding: 0.5em;
+text-color: #cad3f5;
+}
+
+inputbar {
+background-color: transparent;
+background-image: url("path/to/image.png", width);
+border-radius: 1em;
+children: [ "dummy","textbox-prompt-colon","prompt","dummy" ];
+enabled: true;
+orientation: horizontal;
+padding: 5em 2.5em;
+spacing: 1.25em;
+}
+
+listbox {
+enabled: false;
+}
+
+listview {
+background-color: transparent;
+columns: 6;
+cursor: "default";
+cycle: true;
+enabled: true;
+layout: vertical;
+lines: 1;
+scrollbar: false;
+spacing: 1em;
+}
+
+mainbox {
+background-color: transparent;
+children: [ "inputbar","listview","message" ];
+enabled: true;
+orientation: vertical;
+padding: 1em;
+spacing: 1em;
+}
+
+message {
+background-color: #24273a;
+border-radius: 10px;
+enable: true;
+padding: 0.5em;
+text-color: #cad3f5;
+}
+
+mode-switcher {
+enabled: false;
+}
+
+prompt {
+background-color: #8aadf4;
+border-radius: 10px;
+enabled: true;
+horizontal-align: 0.5;
+padding: 0.5em;
+text-color: #24273a;
+vertical-align: 0.5;
+}
+
+textbox {
+background-color: inherit;
+horizontal-align: 0.5;
+text-color: inherit;
+vertical-align: 0.5;
+}
+
+textbox-prompt-colon {
+background-color: #3F6ECC;
+border-radius: 10px;
+enabled: true;
+expand: false;
+font: "FiraCode Nerd Font Mono 34";
+horizontal-align: 0.5;
+padding: 0.25em 0.75em;
+str: "";
+text-color: #181926;
+vertical-align: 0.5;
+}
+
+window {
+anchor: center;
+background-color: #181926;
+border: 3px;
+border-color: #3F6ECC;
+border-radius: 15px;
+cursor: "Catppuccin-Macchiato-Dark-Cursors";
+enabled: true;
+fullscreen: false;
+height: 600px;
+location: center;
+transparency: "real";
+width: 1000px;
+x-offset: 0px;
+y-offset: 0px;
+}
