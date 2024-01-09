@@ -57,16 +57,17 @@
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
-<!-- vim-markdown-toc GFM -->
+
+<!-- vim-markdown-toc GitLab -->
 
 * [About The Project](#about-the-project)
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
-    * [Nix/NixOS + Home Manager (With Flakes)](#nixnixos--home-manager-with-flakes)
+    * [Nix/NixOS + Home Manager (With Flakes)](#nixnixos-home-manager-with-flakes)
     * [Without Nix](#without-nix)
   * [Installation](#installation)
-    * [Nix/NixOS + Home Manager (With Flakes)](#nixnixos--home-manager-with-flakes-1)
+    * [Nix/NixOS + Home Manager (With Flakes)](#nixnixos-home-manager-with-flakes-1)
       * [Building applets with Rofi for X11, not Wayland](#building-applets-with-rofi-for-x11-not-wayland)
     * [Without Nix](#without-nix-1)
 * [Usage](#usage)
@@ -76,6 +77,7 @@
 * [Acknowledgments](#acknowledgments)
 
 <!-- vim-markdown-toc -->
+
 </details>
 
 
@@ -309,7 +311,7 @@ Distributed under the GNU General Public License v3.0. See `LICENSE` for more in
 [license-url]: https://gitlab.com/Zhaith-Izaliel/rofi-applets/-/blob/master/LICENSE?ref_type=heads
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/virgil-ribeyre-810135196/
 
 [product-screenshot]: images/screenshot.png
 [Nix]: https://img.shields.io/badge/nix-bedbf1?style=for-the-badge&logo=nixos
