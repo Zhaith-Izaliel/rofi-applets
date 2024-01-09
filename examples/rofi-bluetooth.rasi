@@ -1,0 +1,174 @@
+* {
+font: "FiraCode Nerd Font Mono 14";
+}
+
+configuration {
+show-icons: false;
+}
+
+dummy {
+background-color: transparent;
+enabled: true;
+}
+
+element {
+background-color: transparent;
+border-radius: 10px;
+cursor: pointer;
+enabled: true;
+padding: 0.5em;
+spacing: 0.95em;
+text-color: #cad3f5;
+}
+
+element normal.active, element alternate.active {
+background-color: transparent;
+text-color: #8bd5ca;
+}
+
+element normal.normal, element alternate.normal {
+background-color: inherit;
+text-color: inherit;
+}
+
+element normal.urgent, element alternate.urgent {
+background-color: transparent;
+text-color: #ee99a0;
+}
+
+element selected.active {
+background-color: #8bd5ca;
+text-color: #24273a;
+}
+
+element selected.normal {
+background-color: #7dc4e4;
+text-color: #24273a;
+}
+
+element selected.urgent {
+background-color: #ee99a0;
+text-color: #24273a;
+}
+
+element-text {
+background-color: transparent;
+cursor: inherit;
+horizontal-align: 0.0;
+text-color: inherit;
+vertical-align: 0.5;
+}
+
+error-message {
+background-color: #24273a;
+border-radius: 15px;
+padding: 0.8em;
+text-color: #cad3f5;
+}
+
+imagebox {
+background-color: transparent;
+background-image: url("path/to/image.png", height);
+children: [ "inputbar","dummy" ];
+enabled: true;
+orientation: vertical;
+padding: 1.25em;
+}
+
+inputbar {
+background-color: #181926;
+border: 2px;
+border-color: #91d7e3;
+border-radius: 10px;
+children: [ "dummy","textbox-prompt-colon","prompt","dummy" ];
+enabled: true;
+padding: 15px;
+spacing: 10px;
+text-color: #cad3f5;
+}
+
+listbox {
+background-color: transparent;
+children: [ "listview" ];
+enabled: true;
+orientation: vertical;
+padding: 1.25em;
+spacing: 1.25em;
+}
+
+listview {
+background-color: transparent;
+columns: 1;
+cursor: "default";
+cycle: true;
+dynamic: true;
+enabled: true;
+fixed-columns: true;
+fixed-height: true;
+layout: vertical;
+lines: 8;
+reverse: false;
+scrollbar: false;
+spacing: 0.625em;
+text-color: #cad3f5;
+}
+
+mainbox {
+background-color: transparent;
+children: [ "imagebox","listbox","message" ];
+enabled: true;
+orientation: horizontal;
+spacing: 0px;
+}
+
+message {
+background-color: #24273a;
+border-radius: 15px;
+padding: 0.95em;
+text-color: #cad3f5;
+}
+
+mode-switcher {
+enabled: false;
+}
+
+prompt {
+background-color: inherit;
+enabled: true;
+text-color: inherit;
+}
+
+textbox {
+background-color: #181926;
+border-radius: 10px;
+horizontal-align: 0.0;
+padding: 0.95em;
+text-color: #cad3f5;
+vertical-align: 0.5;
+}
+
+textbox-prompt-colon {
+background-color: inherit;
+enabled: true;
+expand: false;
+str: "";
+text-color: inherit;
+text-transform: "bold";
+}
+
+window {
+anchor: center;
+background-color: #24273a;
+border: 3px;
+border-color: #4EA7B6;
+border-radius: 15px;
+cursor: "Catppuccin-Macchiato-Dark-Cursors";
+enabled: true;
+fullscreen: false;
+height: 600px;
+location: center;
+transparency: "real";
+width: 1000px;
+x-offset: 0px;
+y-offset: 0px;
+}
