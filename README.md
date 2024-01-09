@@ -107,7 +107,9 @@ directory.
 <!-- GETTING STARTED -->
 ## Getting Started
 
-There are two ways of
+There are two ways of installing the applets, either with Home Manager using
+flakes, or by installing them yourself, with all their dependencies on a non-Nix
+system.
 
 ### Prerequisites
 
@@ -230,14 +232,16 @@ sudo chmod +x /usr/local/bin/<name>
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Each applet has its own documentation located in their corresponding directory.
-You can find usage information in there!
+~Each applet has its own documentation located in their corresponding directory.
+You can find usage information in there!~ The documentations are WIP and will
+come ✨soon✨.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Add documentation for every applets
 - [ ] Create our own Network-Manager applet following the same pattern of
 configuration and theming options.
 
