@@ -2,6 +2,7 @@
   pkgs,
   cleanAppletSource,
   useWayland ? true,
+  withBluezExperimental ? false,
   version ? "git"
 }:
 
@@ -17,7 +18,7 @@ pkgs.callPackage ../builder.nix {
   ];
 
   paths = with pkgs; [
-    bluez
+    (bluez.override { withExperimental = withBluezExperimental; })
     gnugrep
   ];
 }
