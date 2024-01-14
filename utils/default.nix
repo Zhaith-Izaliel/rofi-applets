@@ -99,22 +99,22 @@ rec {
   let
     valueToWrite =
     if isBool value then
-    toString value
+      if value then "true" else "false"
     else if isInt value then
-    toString value
+      toString value
     else if isString value then
-    ''"${value}"''
+      ''"${value}"''
     else if isAttrs value then
-    "(" +
-    concatStringsSep " " (mapAttrsToList (name: item:
-    ''["${name}"]="${toString item}"'') value)
-    + ")"
+      "(" +
+      concatStringsSep " " (mapAttrsToList (name: item:
+      ''["${name}"]="${toString item}"'') value)
+      + ")"
     else if isList value then
-    "(" +
-    concatStringsSep " " (builtins.map (item: ''"${item}"'') value)
-    + ")"
+      "(" +
+      concatStringsSep " " (builtins.map (item: ''"${item}"'') value)
+      + ")"
     else
-    abort "Unhandled value type ${builtins.typeOf value}";
+      abort "Unhandled value type ${builtins.typeOf value}";
   in
   ''${toUpper name}=${valueToWrite}''
   )
