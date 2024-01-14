@@ -102,9 +102,7 @@ rec {
       if value then "true" else "false"
     else if isInt value then
       toString value
-    else if isString value then
-      ''"${value}"''
-    else if isPath value then
+    else if (isString value || isPath value) then
       ''"${value}"''
     else if isAttrs value then
       "(" +
