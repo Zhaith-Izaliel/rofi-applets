@@ -6,7 +6,7 @@
 
 let
   inherit (lib) isBool isInt isString isList isAttrs generators filterAttrs
-  concatStringsSep concatMap types mapAttrsToList mkOption toUpper;
+  concatStringsSep concatMap types mapAttrsToList mkOption toUpper isPath;
 in
 rec {
   mkValueString = value:
@@ -103,6 +103,8 @@ rec {
     else if isInt value then
       toString value
     else if isString value then
+      ''"${value}"''
+    else if isPath value then
       ''"${value}"''
     else if isAttrs value then
       "(" +
