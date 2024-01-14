@@ -17,7 +17,7 @@
   outputs = { nixpkgs, rofi-network-manager, ... }:
   let
     system = "x86_64-linux";
-    version = "1.2.0";
+    version = "1.3.0";
   in
   with import nixpkgs { inherit system; };
   let
@@ -33,7 +33,7 @@
         pavucontrol
         bluez
         networkmanager
-        dunst
+        libnotify
         networkmanagerapplet
         xdg-utils
         gawk

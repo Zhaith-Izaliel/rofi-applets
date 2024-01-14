@@ -2,14 +2,25 @@
 
 # Config
 STOP_TEXT=""
-PREVIOUS_TEXT=""
-NEXT_TEXT=""
+PREVIOUS_TEXT="󰒮"
+NEXT_TEXT="󰒭"
 REPEAT_TEXT=""
 RANDOM_TEXT=""
 PAUSE_TEXT=""
 PLAY_TEXT=""
 PARSE_ERROR_TEXT=""
 NO_SONG_TEXT="󰟎"
+
+# Notifications
+NOTIFICATION=true
+PREVIOUS_NOTIFICATION_TEXT="󰒮 Playing"
+PREVIOUS_NOTIFICATION_ICON=""
+NEXT_NOTIFICATION_TEXT="󰒭 Playing"
+NEXT_NOTIFICATION_ICON=""
+PLAY_NOTIFICATION_TEXT=" Playing"
+PLAY_NOTIFICATION_ICON=""
+PAUSE_NOTIFICATION_TEXT=" Pausing"
+PAUSE_NOTIFICATION_ICON=""
 
 # Globals
 THEME_PATH="$HOME/.config/rofi/rofi-mpd.rasi"
@@ -50,7 +61,7 @@ init_prompt_and_message() {
   fi
 
   PROMPT="`mpc -f "%artist%" current`"
-  MESG="`mpc -f "%title%" current` :: `mpc status | grep "#" | awk '{print $3}'`"
+  MESG="`mpc -f "%title%" current` ⎸`mpc status | grep "#" | awk '{print $3}'`"
 }
 
 init_repeat() {
@@ -105,24 +116,41 @@ pass_options() {
   fi
 }
 
+show_notification() {
+  if [ "$NOTIFICATION" != true ]; then
+    return
+  fi
+
+  case "$1" in
+    --toggle)
+      if [[ "${STATUS}" == *"[playing]"* ]]; then
+        notify-send -u low -i "$PAUSE_NOTIFICATION_ICON" "$PAUSE_NOTIFICATION_TEXT `mpc current`"
+      else
+        notify-send -u low -i "$PLAY_NOTIFICATION_ICON" "$PLAY_NOTIFICATION_TEXT `mpc current`"
+      fi
+      ;;
+    --next)
+      notify-send -u low -i "$NEXT_NOTIFICATION_ICON" "$NEXT_NOTIFICATION_TEXT `mpc current`"
+      ;;
+    --prev)
+      notify-send -u low -i "$PREVIOUS_NOTIFICATION_ICON" "$PREVIOUS_NOTIFICATION_TEXT `mpc current`"
+      ;;
+  esac
+}
+
 run() {
   case "$1" in
     --toggle)
       mpc -q toggle
-      if [[ "${STATUS}" == *"[playing]"* ]]; then
-        dunstify -i "" -u low -t 1000 "$PAUSE_TEXT  `mpc current`"
-      else
-        dunstify -i "" -u low -t 1000 "$PLAY_TEXT  `mpc current`"
-      fi
       ;;
     --stop)
       mpc -q stop
       ;;
     --next)
-      mpc -q next && dunstify -u low -t 1000 " `mpc current`"
+      mpc -q next
       ;;
     --prev)
-      mpc -q prev && dunstify -u low -t 1000 " `mpc current`"
+      mpc -q prev
       ;;
     --repeat)
       mpc -q repeat
@@ -131,6 +159,7 @@ run() {
       mpc -q random
       ;;
   esac
+  show_notification "$1"
 }
 
 main() {

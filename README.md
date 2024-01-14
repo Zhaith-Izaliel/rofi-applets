@@ -139,7 +139,7 @@ Dependencies for every applet
 * MPD applet:
   * An MPD server up and running to use
   * MPC to control MPD in command line
-  * Dunst for the `dunstify` command to send notifications
+  * libnotify for the `notify-send` command to send notifications
 * Network-Manager applet:
   * This applet is external to this repository, if you wish to install it, you
   can find instructions [here][rofi-network-manager].

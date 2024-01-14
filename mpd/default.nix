@@ -18,7 +18,7 @@ pkgs.callPackage ../builder.nix {
 
   paths = with pkgs; [
     mpc-cli
-    dunst
+    libnotify
   ];
 }
 
