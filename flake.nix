@@ -17,7 +17,7 @@
   outputs = { nixpkgs, rofi-network-manager, ... }:
   let
     system = "x86_64-linux";
-    version = "1.3.0";
+    version = "1.4.0";
   in
   with import nixpkgs { inherit system; };
   let
