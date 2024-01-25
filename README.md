@@ -31,7 +31,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<h1 align="center">🍪Rofi Applets, the Nix way.</h3>
+<h1 align="center">🍪Rofi Applets, the Nix way.</h1>
 
   <p align="center">
     A collection of Rofi applets, with their own derivations and modules to be
