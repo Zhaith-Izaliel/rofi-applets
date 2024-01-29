@@ -2,10 +2,8 @@
   pkgs,
   cleanAppletSource,
   useWayland ? true,
-  withBluezExperimental ? false,
-  version ? "git"
+  version ? "git",
 }:
-
 pkgs.callPackage ../builder.nix {
   pname = "rofi-bluetooth";
 
@@ -18,8 +16,7 @@ pkgs.callPackage ../builder.nix {
   ];
 
   paths = with pkgs; [
-    (bluez.override { withExperimental = withBluezExperimental; })
+    bluez
     gnugrep
   ];
 }
-
