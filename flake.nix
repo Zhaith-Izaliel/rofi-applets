@@ -20,7 +20,7 @@
     ...
   }: let
     system = "x86_64-linux";
-    version = "1.4.1";
+    version = "1.4.2";
   in
     with import nixpkgs {inherit system;}; let
       utils = import ./utils {inherit lib;};
