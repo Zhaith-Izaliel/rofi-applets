@@ -20,7 +20,7 @@
     ...
   }: let
     system = "x86_64-linux";
-    version = "1.6.0";
+    version = "1.7.0";
   in
     with import nixpkgs {inherit system;}; let
       utils = import ./utils {inherit lib;};
@@ -47,7 +47,7 @@
       };
 
       packages.${system} = {
-        rofi-network-manager = pkgs.callPackage ./network-manager {
+        ronema = pkgs.callPackage ./ronema {
           version = rofi-network-manager.shortRev;
           src = rofi-network-manager;
         };
@@ -80,7 +80,7 @@
           imports = [
             rofi-bluetooth
             rofi-quicklinks
-            rofi-network-manager
+            ronema
             rofi-favorites
             rofi-power-profiles
             rofi-mpd
@@ -91,7 +91,7 @@
           package = packages.${system}.rofi-bluetooth;
         };
 
-        rofi-network-manager = import ./network-manager/hm-module.nix {
+        ronema = import ./network-manager/hm-module.nix {
           package = packages.${system}.rofi-network-manager;
         };
 
