@@ -161,9 +161,9 @@ in {
       theme = mkOption {
         type = types.nonEmptyStr;
         default =
-          if cfg.theme
-          then "hm-theme.rasi"
-          else generatedThemeName;
+          if cfg.theme != null
+          then generatedThemeName
+          else "ronema.rasi";
         description = ''
           The theme name for ronema.
 
