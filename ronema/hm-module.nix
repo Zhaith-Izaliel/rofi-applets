@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) mkIf mkOption mkEnableOption types optionalString;
-  cfg = config.programs.rofi.applets.network-manager;
+  cfg = config.programs.rofi.applets.ronema;
   rofiHelpers = import ../utils {inherit lib;};
   mkSignalStrength = default:
     mkOption {
