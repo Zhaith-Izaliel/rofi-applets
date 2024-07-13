@@ -4,112 +4,146 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     rofi-network-manager = {
       url = "github:P3rf/rofi-network-manager";
       flake = false;
     };
   };
 
-  outputs = {
-    nixpkgs,
+  outputs = inputs @ {
+    flake-parts,
     rofi-network-manager,
+    nixpkgs,
     ...
   }: let
-    system = "x86_64-linux";
-    version = "1.7.0";
+    version = "2.0.0";
   in
-    with import nixpkgs {inherit system;}; let
-      utils = import ./utils {inherit lib;};
-    in rec {
-      workspaceShell = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
-          brightnessctl
-          mpc-cli
-          mpd
-          wireplumber
-          pavucontrol
-          bluez
-          networkmanager
-          libnotify
-          networkmanagerapplet
-          xdg-utils
-          gawk
-          power-profiles-daemon
-        ];
+    flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
+      systems = ["x86_64-linux"];
+
+      perSystem = {
+        pkgs,
+        system,
+        inputs',
+        ...
+      }: let
+        utils = import ./utils {lib = nixpkgs.lib;};
+      in {
+        devShells = {
+          default = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              brightnessctl
+              mpc-cli
+              mpd
+              wireplumber
+              pavucontrol
+              bluez
+              networkmanager
+              libnotify
+              networkmanagerapplet
+              xdg-utils
+              gawk
+              power-profiles-daemon
+            ];
+          };
+        };
+
+        packages = {
+          ronema = pkgs.callPackage ./ronema {
+            version = rofi-network-manager.shortRev;
+            src = rofi-network-manager;
+          };
+          rofi-bluetooth = pkgs.callPackage ./bluetooth {
+            inherit version;
+            inherit (utils) cleanAppletSource;
+          };
+          rofi-quicklinks = pkgs.callPackage ./quicklinks {
+            inherit version;
+            inherit (utils) cleanAppletSource;
+          };
+          rofi-favorites = pkgs.callPackage ./favorites {
+            inherit version;
+            inherit (utils) cleanAppletSource;
+          };
+          rofi-power-profiles = pkgs.callPackage ./power-profiles {
+            inherit version;
+            inherit (utils) cleanAppletSource;
+          };
+          rofi-mpd = pkgs.callPackage ./mpd {
+            inherit version;
+            inherit (utils) cleanAppletSource;
+          };
+        };
       };
 
-      devShells.${system} = {
-        default = workspaceShell;
+      flake = let
+        getPackage = pkgs': name: withSystem pkgs'.stdenv.hostPlatform.system ({config, ...}: config.packages.${name});
+      in {
+        homeManagerModules = rec {
+          default = {...}: {
+            imports = [
+              rofi-bluetooth
+              rofi-quicklinks
+              ronema
+              rofi-favorites
+              rofi-power-profiles
+              rofi-mpd
+            ];
+          };
+
+          rofi-bluetooth = {pkgs, ...}: let
+            hm-module = import ./bluetooth/hm-module.nix {
+              package = getPackage pkgs "rofi-bluetooth";
+            };
+          in {
+            imports = [hm-module];
+          };
+
+          ronema = {pkgs, ...}: let
+            hm-module = import ./ronema/hm-module.nix {
+              package = getPackage pkgs "ronema";
+            };
+          in {
+            imports = [hm-module];
+          };
+
+          rofi-quicklinks = {pkgs, ...}: let
+            hm-module = import ./rofi-quicklinks/hm-module.nix {
+              package = getPackage pkgs "rofi-quicklinks";
+            };
+          in {
+            imports = [hm-module];
+          };
+
+          rofi-favorites = {pkgs, ...}: let
+            hm-module = import ./rofi-favorites/hm-module.nix {
+              package = getPackage pkgs "rofi-favorites";
+            };
+          in {
+            imports = [hm-module];
+          };
+
+          rofi-power-profiles = {pkgs, ...}: let
+            hm-module = import ./rofi-power-profiles/hm-module.nix {
+              package = getPackage pkgs "rofi-power-profiles";
+            };
+          in {
+            imports = [hm-module];
+          };
+
+          rofi-mpd = {pkgs, ...}: let
+            hm-module = import ./rofi-mpd/hm-module.nix {
+              package = getPackage pkgs "rofi-mpd";
+            };
+          in {
+            imports = [hm-module];
+          };
+        };
+
+        overlays.default = {pkgs, ...}: let
+          packages = withSystem pkgs.stdenv.hostPlatform.system ({config, ...}: config.packages);
+        in
+          final: prev: packages;
       };
-
-      packages.${system} = {
-        ronema = pkgs.callPackage ./ronema {
-          version = rofi-network-manager.shortRev;
-          src = rofi-network-manager;
-        };
-        rofi-bluetooth = pkgs.callPackage ./bluetooth {
-          inherit version;
-          inherit (utils) cleanAppletSource;
-        };
-        rofi-quicklinks = pkgs.callPackage ./quicklinks {
-          inherit version;
-          inherit (utils) cleanAppletSource;
-        };
-        rofi-favorites = pkgs.callPackage ./favorites {
-          inherit version;
-          inherit (utils) cleanAppletSource;
-        };
-        rofi-power-profiles = pkgs.callPackage ./power-profiles {
-          inherit version;
-          inherit (utils) cleanAppletSource;
-        };
-        rofi-mpd = pkgs.callPackage ./mpd {
-          inherit version;
-          inherit (utils) cleanAppletSource;
-        };
-      };
-
-      overlays.default = final: prev: packages.${system};
-
-      homeManagerModules = rec {
-        default = {...}: {
-          imports = [
-            rofi-bluetooth
-            rofi-quicklinks
-            ronema
-            rofi-favorites
-            rofi-power-profiles
-            rofi-mpd
-          ];
-        };
-
-        rofi-bluetooth = import ./bluetooth/hm-module.nix {
-          package = packages.${system}.rofi-bluetooth;
-        };
-
-        ronema = import ./network-manager/hm-module.nix {
-          package = packages.${system}.rofi-network-manager;
-        };
-
-        rofi-quicklinks = import ./quicklinks/hm-module.nix {
-          package = packages.${system}.rofi-quicklinks;
-        };
-
-        rofi-favorites = import ./favorites/hm-module.nix {
-          package = packages.${system}.rofi-favorites;
-        };
-
-        rofi-power-profiles = import ./power-profiles/hm-module.nix {
-          package = packages.${system}.rofi-power-profiles;
-        };
-
-        rofi-mpd = import ./mpd/hm-module.nix {
-          package = packages.${system}.rofi-mpd;
-        };
-      };
-    };
+    });
 }
