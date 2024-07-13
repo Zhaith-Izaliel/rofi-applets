@@ -1,0 +1,27 @@
+diff --git a/src/ronema b/src/ronema
+index 0f85268..2fbd6af 100755
+--- a/src/ronema
++++ b/src/ronema
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env bash
+-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
++DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ WIRELESS_INTERFACES=($(nmcli device | awk '$2=="wifi" {print $1}'))
+ WIRELESS_INTERFACES_PRODUCT=()
+ WLAN_INT=0
+@@ -7,10 +7,10 @@ WIRED_INTERFACES=($(nmcli device | awk '$2=="ethernet" {print $1}'))
+ WIRED_INTERFACES_PRODUCT=()
+ VPN_PATTERN='(wireguard|vpn)'
+ function initialization() {
+-	source "$DIR/ronema.conf" || source "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/ronema.conf" || exit
+-	source "$DIR/languages/${LANGUAGE}.lang" || source "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/languages/${LANGUAGE}.lang" || exit
+-	{ [[ -f "$DIR/themes/${THEME}" ]] && RASI_DIR="$DIR/themes/${THEME}"; } || { [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/themes/${THEME}" ]] && RASI_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/ronema/themes/${THEME}"; } || exit
+-	{ [[ -d "$DIR/icons" ]] && ICON_DIR="$DIR/icons" ; } || { [[ -d "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/icons" ]] && ICON_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/ronema/icons" ; } || exit
++	source "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/ronema.conf" || source "$DIR/ronema.conf" || exit
++	source "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/languages/${LANGUAGE}.lang" || source "$DIR/languages/${LANGUAGE}.lang" || exit
++	{ [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/themes/${THEME}" ]] && RASI_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/ronema/themes/${THEME}"; } || { [[ -f "$DIR/themes/${THEME}" ]] && RASI_DIR="$DIR/themes/${THEME}"; } || exit
++	 { [[ -d "${XDG_CONFIG_HOME:-$HOME/.config}/ronema/icons" ]] && ICON_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/ronema/icons" ; } || { [[ -d "$DIR/icons" ]] && ICON_DIR="$DIR/icons" ; } || exit
+ 	for i in "${WIRELESS_INTERFACES[@]}"; do WIRELESS_INTERFACES_PRODUCT+=("$(nmcli -f general.product device show "$i" | awk '{print $2}')"); done
+ 	for i in "${WIRED_INTERFACES[@]}"; do WIRED_INTERFACES_PRODUCT+=("$(nmcli -f general.product device show "$i" | awk '{print $2}')"); done
+ 	wireless_interface_state && ethernet_interface_state
+
