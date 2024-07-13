@@ -108,7 +108,7 @@
           };
 
           rofi-quicklinks = {pkgs, ...}: let
-            hm-module = import ./rofi-quicklinks/hm-module.nix {
+            hm-module = import ./quicklinks/hm-module.nix {
               package = getPackage pkgs "rofi-quicklinks";
             };
           in {
@@ -116,7 +116,7 @@
           };
 
           rofi-favorites = {pkgs, ...}: let
-            hm-module = import ./rofi-favorites/hm-module.nix {
+            hm-module = import ./favorites/hm-module.nix {
               package = getPackage pkgs "rofi-favorites";
             };
           in {
@@ -124,7 +124,7 @@
           };
 
           rofi-power-profiles = {pkgs, ...}: let
-            hm-module = import ./rofi-power-profiles/hm-module.nix {
+            hm-module = import ./power-profiles/hm-module.nix {
               package = getPackage pkgs "rofi-power-profiles";
             };
           in {
@@ -132,7 +132,7 @@
           };
 
           rofi-mpd = {pkgs, ...}: let
-            hm-module = import ./rofi-mpd/hm-module.nix {
+            hm-module = import ./mpd/hm-module.nix {
               package = getPackage pkgs "rofi-mpd";
             };
           in {
