@@ -2,8 +2,8 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf mkOption mkEnableOption types optionalString;
   cfg = config.programs.rofi.applets.network-manager;
   rofiHelpers = import ../utils {inherit lib;};
   mkSignalStrength = default:
@@ -28,6 +28,38 @@ in {
       type = rofiHelpers.themeType;
       default = null;
       description = "Define the theme config of the applet";
+    };
+
+    languages = mkOption {
+      type = types.path;
+      default = "${package}/languages";
+      description = ''
+        The path to a directory containing languages file for ronema.
+
+        The directory should contain at least the language defined in `programs.rofi.applets.ronema.settings.language`
+
+        See: https://github.com/P3rf/rofi-network-manager/blob/master/src/languages/lang_file.example to learn how to make language files for ronema.
+      '';
+    };
+
+    icons = mkOption {
+      type = types.path;
+      default = "${package}/icons";
+      description = ''
+        The path to a directory containing icons for ronema.
+
+        The directory should contain the following icons in the same names and formats:
+        - `alert.svg`
+        - `change.svg`
+        - `restart.svg`
+        - `scanning.svg`
+        - `vpn.svg`
+        - `wait.svg`
+        - `wifi-off.svg`
+        - `wifi-on.svg`
+        - `wired-off.svg`
+        - `wired-on.svg`
+      '';
     };
 
     settings = {
@@ -132,7 +164,12 @@ in {
           if cfg.theme
           then "hm-theme.rasi"
           else generatedThemeName;
-        description = "The theme name for ronema.";
+        description = ''
+          The theme name for ronema.
+
+          This option is automatically set when you defined your own theme with `programs.rofi.applets.ronema`.
+          If you change it, your defined theme will not be applied.
+        '';
       };
 
       selection_prefix = mkOption {
@@ -154,9 +191,11 @@ in {
 
     xdg.configFile = {
       "ronema/themes/${generatedThemeName}".text =
-        strings.optionalString (cfg.theme != null)
+        optionalString (cfg.theme != null)
         (rofiHelpers.toRasi cfg.theme);
       "ronema/ronema.conf".text = rofiHelpers.toConf cfg.settings;
+      "ronema/icons".source = cfg.icons;
+      "ronema/languages".source = cfg.languages;
     };
   };
 }
